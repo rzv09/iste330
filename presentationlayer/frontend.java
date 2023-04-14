@@ -112,8 +112,12 @@ public class frontend {
 
             switch(user_command){
                 case 1:
-                    System.out.println("ERROR: this command is not operational at this time. Please select a different one.");
-                    facultyCommands();
+                    System.out.print("\nFacultyID: ");
+                    str_input = scanner.nextLine(); //The variable that stores the string input
+                    user_command = Integer.parseInt(str_input); //Convert string to integer.
+
+                    String output = dl.printFacultyMember(user_command);
+                    System.out.println(output);
                     break;
                 case 2: //Add faculty member
                     System.out.println("\n Please enter faculty ");
