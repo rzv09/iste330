@@ -1,8 +1,8 @@
+package tests;
+
 import datalayer.DataLayer;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import javax.xml.crypto.Data;
 
 public class DataLayerTest {
     @BeforeClass public static void connect() {
@@ -36,14 +36,14 @@ public class DataLayerTest {
         assert(result != -1);
     }
 
-    @Test
-    public void testAddFacultyDriver() {
-        DataLayer dl = new DataLayer();
-        dl.rebuildTables();
-        boolean result = dl.addFacultyDriver("Severus", "Snape", "ss@hogwarts.edu", "magicIsCool",
-                "1111111111", "1 hogsmeade village", "Research 1", "My new research project");
-        assert(result);
-    }
+//    @Test
+//    public void testAddFacultyDriver() {
+//        DataLayer dl = new DataLayer();
+//        dl.rebuildTables();
+//        boolean result = dl.addFacultyDriver("Severus", "Snape", "ss@hogwarts.edu", "magicIsCool",
+//                "1111111111", "1 hogsmeade village", "Research 1", "My new research project");
+//        assert(result);
+//    }
 
     @Test
     public void testAddStudent() {
@@ -61,14 +61,14 @@ public class DataLayerTest {
         assert (result != -1);
     }
 
-    @Test
-    public void testAddStudentDriver() {
-        DataLayer dl = new DataLayer();
-        dl.rebuildTables();
-        boolean result = dl.addStudentDriver("Harry", "Potter", "hp@hogwarts.edu", "weewoo",
-                "magic");
-        assert (result);
-    }
+//    @Test
+//    public void testAddStudentDriver() {
+//        DataLayer dl = new DataLayer();
+//        dl.rebuildTables();
+//        boolean result = dl.addStudentKeyword("Harry", "Potter", "hp@hogwarts.edu", "weewoo",
+//                "magic");
+//        assert (result);
+//    }
 
     @Test
     public void testAddGuest() {
@@ -86,14 +86,14 @@ public class DataLayerTest {
         assert (result != -1);
     }
 
-    @Test
-    public void testAddGuestDriver() {
-        DataLayer dl = new DataLayer();
-        dl.rebuildTables();
-        boolean result = dl.addGuestDriver("harrypotter","hp@hogwarts.edu", "weewoo",
-                "magical magic");
-        assert (result);
-    }
+//    @Test
+//    public void testAddGuestDriver() {
+//        DataLayer dl = new DataLayer();
+//        dl.rebuildTables();
+//        boolean result = dl.addGuestDriver("harrypotter","hp@hogwarts.edu", "weewoo",
+//                "magical magic");
+//        assert (result);
+//    }
 
 
 }

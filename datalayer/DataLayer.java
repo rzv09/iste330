@@ -1,12 +1,10 @@
 package datalayer;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.*;
+import java.util.*;
 
 /**
  * File: DataLayer.java
@@ -17,13 +15,13 @@ public class DataLayer {
 
     public static final String URL = "jdbc:mysql://localhost/";
     public static final String DEFAULT_DRIVER = "com.mysql.cj.jdbc.Driver";
-    public  static String userName = new String();
+    public static String userName = new String();
     public static String password = new String();
 
 
     private static Connection conn;
-    private Statement stmt;
     private ResultSet rs;
+    private Statement stmt;
     private String sql;
 
     /**
@@ -66,27 +64,32 @@ public class DataLayer {
      * A driver method that adds a faculty member, their abstract, and a Faculty-Abstract Record
      * @return true if successful
      */
-    public boolean addFacultyDriver(String firstName, String lastName, String email, String password,
-                                    String phone, String address,
-                                    String title, String description) {
-        int facultyId = addFacultyMember(firstName, lastName, email, password, phone, address);
-        int abstractId = addAbstract(title, description);
+    public boolean addFacultyKeyword(int facultyId, int faculty_topicId) {
         try {
-            sql = "INSERT INTO Faculty_Abstract(facultyID, abstractID) VALUES (?, ?)";
+            sql = "INSERT INTO Faculty_Keyword(facultyID, keywordID) VALUES (?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, String.valueOf(facultyId));
-            ps.setString(2, String.valueOf(abstractId));
+            ps.setInt(1, facultyId);
+            ps.setInt(2, faculty_topicId);
             ps.executeUpdate();
             return true;
         }
         catch (SQLException sqle) {
-            System.out.println("Error: could not add a faculty member's data to the db");
+            System.out.println("Error: Could Not Implement Faculty Keyword");
             sqle.printStackTrace();
             return false;
         }
-
     }
 
+    /**
+     * 
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param password
+     * @param phone
+     * @param address
+     * @return
+     */
     public int addFacultyMember(String firstName, String lastName, String email, String password,
                                     String phone, String address) {
         String passwordHash = encrypt(password);
@@ -115,6 +118,12 @@ public class DataLayer {
 
     }
 
+    /**
+     *
+     * @param title
+     * @param description
+     * @return
+     */
     public int addAbstract(String title, String description) {
         try {
             sql = "INSERT INTO Abstract(title, description) VALUES (?, ?)";
@@ -253,37 +262,29 @@ public class DataLayer {
     }
 
     /**
-     * Driver method that adds a student to the Student table, then adds a topic to the Student_Topic table,
-     * then adds to Student_Keywords the IDs
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param password
-     * @param keyword
+     *
+     * @param studentId
+     * @param student_topicId
      * @return
      */
-    public boolean addStudentDriver(String firstName, String lastName, String email, String password,
-                                String keyword) {
-        int studentId = addStudent(firstName, lastName, email, password);
-        int student_topicId = addStudentTopic(keyword);
+    public boolean addStudentKeyword(int studentId, int student_topicId) {
         try {
             sql = "INSERT INTO Student_Keyword(studentID, keywordID) VALUES (?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, String.valueOf(studentId));
-            ps.setString(2, String.valueOf(student_topicId));
+            ps.setInt(1, studentId);
+            ps.setInt(2, student_topicId);
             ps.executeUpdate();
             return true;
         }
         catch (SQLException sqle) {
-            System.out.println("Error: could not add a student's data to the db");
+            System.out.println("Error: Could Not Implement Student Keyword");
             sqle.printStackTrace();
             return false;
         }
-
     }
 
     /**
-     * add a student record to Student table
+     * Add a student record to Student table
      * @param name
      * @param email
      * @param password
@@ -338,22 +339,64 @@ public class DataLayer {
         }
     }
 
-    public boolean addGuestDriver(String name, String email, String password, String keyword) {
-        int guestId = addGuest(name, email, password);
-        int guestTopicId = addGuestTopic(keyword);
+    /**
+     *
+     * @param guestId
+     * @param guest_topicId
+     * @return
+     */
+    public boolean addGuestKeyword(int guestId, int guest_topicId) {
         try {
             sql = "INSERT INTO Guest_Keyword(guestID, keywordID) VALUES (?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, String.valueOf(guestId));
-            ps.setString(2, String.valueOf(guestTopicId));
+            ps.setInt(1, guestId);
+            ps.setInt(2, guest_topicId);
             ps.executeUpdate();
             return true;
         }
         catch (SQLException sqle) {
-            System.out.println("Error: could not add a guest's data to the db");
+            System.out.println("Error: Could Not Implement Guest Keyword");
             sqle.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     *
+     * @param studentID
+     * @return
+     */
+    public Set<Integer> getStudentMatches(int studentID) {
+        Set<Integer> ids = new HashSet<>();
+        try {
+            sql = "SELECT DISTINCT fk.facultyID FROM faculty_keyword fk " +
+                    "JOIN faculty_topic ft on ft.keyword_ID = fk.keywordID " +
+                    "WHERE keyword IN " +
+                    "(SELECT keyword FROM student_keyword sk JOIN student_topic st ON st.keyword_ID = sk.keywordID WHERE sk.studentID = ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, studentID);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                ids.add(rs.getInt(1));
+            }
+            sql = "SELECT DISTINCT facultyID FROM faculty_abstract fa " +
+                    "JOIN abstract a on fa.abstractID = a.abstractID " +
+                    "WHERE description LIKE '%'+" +
+                        "(SELECT CONCAT_WS('|', keyword) FROM student_keyword sk " +
+                        "JOIN student_topic st ON st.keyword_ID = sk.keywordID WHERE sk.studentID = ?)" +
+                    "+'%'";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, studentID);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                ids.add(rs.getInt(1));
+            }
+        }
+        catch (SQLException sqle) {
+            System.out.println("Error: could not add a guest's data to the db");
+            sqle.printStackTrace();
+        }
+        return ids;
     }
 
 
