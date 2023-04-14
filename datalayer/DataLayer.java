@@ -61,6 +61,31 @@ public class DataLayer {
     }
 
     /**
+     * Add a keyword record to Faculty_Topic
+     * @param keyword
+     * @return
+     */
+    public int addFacultyTopic(String keyword) {
+        try {
+            sql = "INSERT INTO Faculty_Topic(keyword) VALUES (?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, keyword);
+            ps.executeUpdate();
+            sql = "SELECT LAST_INSERT_ID()";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery(sql);
+            rs.next();
+            String inserted = rs.getString(1);
+            System.out.println("ID of inserted record is: " + inserted + "\n");
+            return Integer.parseInt(inserted);
+        }
+        catch (SQLException sqle) {
+            System.out.println("Error: Could not add a keyword record to the Faculty_Topic record");
+            return -1;
+        }
+    }
+
+    /**
      * A driver method that adds a faculty member, their abstract, and a Faculty-Abstract Record
      * @return true if successful
      */
@@ -178,6 +203,30 @@ public class DataLayer {
             System.out.println("Error: Could not add an abstract record to the Abstract table");
             sqle.printStackTrace();
             return -1;
+        }
+    }
+
+    /**
+     * Author: Declan Naughton
+     * 
+     * Assigns an abstract to the faculty member that created it.
+     * @param facultyID
+     * @param description
+     * @return
+     */
+    public boolean assignAbstract(int facultyID, int abstractID) {
+        try {
+            sql = "INSERT INTO Faculty_Abstract(facultyID, abstractID) VALUES (?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, facultyID);
+            ps.setInt(2, abstractID);
+            ps.executeUpdate();
+            return true;
+        }
+        catch (SQLException sqle) {
+            System.out.println("Error: Could Not Implement Faculty Abstract");
+            sqle.printStackTrace();
+            return false;
         }
     }
 

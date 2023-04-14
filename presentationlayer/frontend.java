@@ -162,10 +162,27 @@ public class frontend {
                     if(abstractID == -1){
                         //Do nothing if the function failed
                     } else{
-                        //
+                        dl.assignAbstract(user_command, abstractID);
                     }
                     break;
-                case 4: //Back
+
+                case 4: //Add faculty topic
+                    System.out.print("\n Faculty ID: ");
+                    str_input = scanner.nextLine(); //get the faculty ID
+                    user_command = Integer.parseInt(str_input); //convert ID to integer.
+
+                    System.out.print("\n\t Topic: ");
+                    str_input = scanner.nextLine(); //Get the description
+
+                    int topicID = dl.addFacultyTopic(str_input); //Add the faculty abstract to the table
+                    if(topicID == -1){
+                        //Do nothing if the function failed
+                    } else{
+                        dl.addFacultyKeyword(user_command, topicID);
+                    }
+                    break;
+
+                case 5: //Back
                     break;
                 default:
                     System.out.println("Unrecognized selection...");
