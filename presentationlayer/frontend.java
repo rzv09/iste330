@@ -99,12 +99,28 @@ public class frontend {
                 case 2:
                     break;
                 case 3: //Add faculty abstract
-                    break;
-                case 4: //Add faculty keyword
                     System.out.println("\nEnter Faculty Topic");
-                    System.out.print("\n Faculty ID");
+                    System.out.print("\n Faculty ID: ");
+                    str_input = scanner.nextLine(); //get the faculty ID
+                    user_command = Integer.parseInt(str_input); //convert ID to integer.
+
+                    System.out.println("\t Please enter the abstract ");
+                    System.out.print("\n\t\tTitle: ");
+                    
+                    str_input = scanner.nextLine(); //Get the faculty topic.
+                    String title = str_input; //Get the title
+
+                    System.out.println("\n\t\tDescription: ");
+                    str_input = scanner.nextLine(); //Get the description
+
+                    int abstractID = dl.addAbstract(title, str_input); //Add the faculty abstract to the table
+                    if(abstractID == -1){
+                        //Do nothing if the function failed
+                    } else{
+                        //
+                    }
                     break;
-                case 5: //Back
+                case 4: //Back
                     break;
                 default:
                     System.out.println("Unrecognized selection...");
