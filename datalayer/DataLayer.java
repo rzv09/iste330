@@ -367,6 +367,42 @@ public class DataLayer {
         }
     }
 
+
+
+    /**
+     * Author: Declan Naughton
+     * 
+     * A getter method that stringifies a student's first and last name,
+     * and their email address
+     * @param facultyID
+     * @return
+     */
+    public String printStudent(int studentID){
+        try{
+            sql = "SELECT firstName, lastName, email FROM Student ";
+            sql += "WHERE studentID = ?"; //Search for the faculty member by their id.
+            //Prepare the statement
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, studentID);
+            
+            rs = ps.executeQuery(); //Resultset
+            rs.next();
+
+            String result = rs.getString(2); //lname
+            result += ", "+rs.getString(1); //fname
+            result += "\nEmail: "+rs.getString(3); //email
+
+
+
+            return result;
+        } catch (SQLException sqle) {
+            System.out.println("Error: Could not find a faculty member record to the Faculty table");
+            return null;
+        }
+    }
+
+
+
     /**
      * Add a student record to Student table
      * @param name
