@@ -428,7 +428,7 @@ public class DataLayer {
             }
         }
         catch (SQLException sqle) {
-            System.out.println("Error: could not add a guest's data to the db");
+            System.out.println("Error: could not add a student's data to the db");
             sqle.printStackTrace();
         }
         return ids;

@@ -9,6 +9,7 @@ import presentationlayer.PassMask;
 import java.io.*;
 import java.sql.*;
 import java.util.Scanner;
+import java.util.*;
 
 
 public class frontend {
@@ -242,9 +243,23 @@ public class frontend {
                         System.out.println("Topic added to student.");
                     }
                     break;
-                case 4:
-                    
+
+                case 4: //Match a student to professors with similar interests
+                    System.out.print("\n Student ID: ");
+                    str_input = scanner.nextLine(); //get the student ID
+                    user_command = Integer.parseInt(str_input); //convert ID to integer.
+                    Set<Integer> IDs = dl.getStudentMatches(user_command);
+
+                    Iterator<Integer> iter = IDs.iterator();
+                    System.out.println("Possible Faculty Matches: ");
+                    while(iter.hasNext()){
+                        int i = iter.next();
+                        String output = dl.printFacultyMember(i);
+                        output += "\n Faculty ID: "+i;
+                        System.out.println(output);
+                    }
                     break;
+
                 case 5: //Back
                     break;
                 default:
