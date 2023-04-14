@@ -24,7 +24,7 @@ public class frontend {
             
             
             String pass = PassMask.mask();
-            System.out.println(pass);
+            //System.out.println(pass);
             dl.setPassword(pass);
 
             dl.getConnection("CollegeConnection");
@@ -234,6 +234,8 @@ public class frontend {
                         //Do nothing if the method failed
                     } else{
                         //Insert into interim table
+                        dl.addStudentKeyword(user_command, topicID);
+                        System.out.println("Topic added to student.");
                     }
                     break;
                 case 4:
@@ -311,6 +313,8 @@ public class frontend {
                         //Do nothing if the method failed
                     } else{
                         //Insert into interim table
+                        dl.addStudentKeyword(user_command, topicID);
+                        System.out.println("Topic added to guest.");
                     }
                     break;
                 case 4: //Back
