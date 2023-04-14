@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS CollegeConnection;
 CREATE DATABASE CollegeConnection;
 USE CollegeConnection;
 
---SET FOREIGN_KEY_CHECKS = 0;
+-- SET FOREIGN_KEY_CHECKS = 0;
 
 CREATE TABLE Faculty(
    facultyID    int PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -88,4 +88,4 @@ CREATE TABLE Guest_Keyword
     FOREIGN KEY (keywordID) REFERENCES Guest_Topic(keyword_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---SET FOREIGN_KEY_CHECKS = 1;
+-- SET FOREIGN_KEY_CHECKS = 1;
