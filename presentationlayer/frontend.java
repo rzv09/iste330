@@ -186,7 +186,8 @@ public class frontend {
         System.out.println("\t 1: \t Find Student");
         System.out.println("\t 2: \t Add Student");
         System.out.println("\t 3: \t Add Student Topic");
-        System.out.println("\t 4: \t Back");
+        System.out.println("\t 4: \t Find Student Match");
+        System.out.println("\t 5: \t Back");
         //Query the user for an option.
         System.out.print("\n Selection: ");
         String str_input = scanner.nextLine(); //The variable that stores the string input
@@ -235,7 +236,10 @@ public class frontend {
                         //Insert into interim table
                     }
                     break;
-                case 4: //Back
+                case 4:
+                    
+                    break;
+                case 5: //Back
                     break;
                 default:
                     System.out.println("Unrecognized selection...");
