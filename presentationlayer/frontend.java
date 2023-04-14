@@ -23,13 +23,15 @@ public class frontend {
             dl.setUserName(scanner.nextLine());
             
             
-            
-            dl.setPassword(PassMask.mask());
+            String pass = PassMask.mask();
+            System.out.println(pass);
+            dl.setPassword(pass);
 
-            
             dl.getConnection("CollegeConnection");
 
             interpretOption();
+
+
         } catch (Exception e){
             
         }
@@ -124,8 +126,7 @@ public class frontend {
                     String email = scanner.nextLine();
 
                     //Will need to modify this line so that it requires a user 
-                    System.out.print("\n\tPassword: ");
-                    String password = scanner.nextLine();
+                    String password = PassMask.mask();
 
                     System.out.print("\n\tPhone: ");
                     String phone = scanner.nextLine();
@@ -207,8 +208,7 @@ public class frontend {
                     String email = scanner.nextLine();
 
                     //Will need to modify this line so that it requires a user 
-                    System.out.print("\n\tPassword: ");
-                    String password = scanner.nextLine();
+                    String password = PassMask.mask();
 
 
                     dl.addStudent(fname, lname, email, password);
@@ -224,9 +224,9 @@ public class frontend {
                     str_input = scanner.nextLine(); //Get the keyword.
 
 
-                    int topicID = dl.addStudentTopic(str_input); //Add the faculty abstract to the table
+                    int topicID = dl.addStudentTopic(str_input); //Add the student topic to the table
                     if(topicID == -1){
-                        //Do nothing if the function failed
+                        //Do nothing if the method failed
                     } else{
                         //Insert into interim table
                     }
@@ -243,7 +243,7 @@ public class frontend {
             System.out.println("ERROR: could not parse selection to integer.");
             e.printStackTrace();
         }
-    } //End of facultyCommands
+    } //End of studentCommands
 
 
 
