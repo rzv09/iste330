@@ -4,3 +4,13 @@ File: directions.txt
 Author: Declan Naughton
 
 1. Source mysql/Group5_Database.sql
+2. Run the main method in the file, presentationlayer/frontend.java;
+3. Enter your username. Should be 'root' by default for now.
+4. Enter your sql server password. It will not appear, but you are typing it.
+5. You will be presented with a list of command categories you may input, each 
+corresponding to a number. Enter one of the listed numbers to see the commands
+in that category.
+6. You will be presented with a list of commands, each corresponding to a number.
+Enter one of the listed numbers to begin execution of a command.
+7. The program will walk you through step-by step of what information you need
+to enter.
