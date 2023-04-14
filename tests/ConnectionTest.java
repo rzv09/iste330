@@ -2,8 +2,8 @@ import datalayer.DataLayer;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import org.junit.Assert;
-public class DataLayerTests {
+
+public class ConnectionTest {
     @Test
     public void helloWorld() {
         assertEquals("Hello, World!", "Hello, World!");
@@ -23,7 +23,7 @@ public class DataLayerTests {
         // specific to local machine
         dl.setUserName("root");
         dl.setPassword("new123Password!");
-        boolean connected = dl.getConnection("classicmodels");
+        boolean connected = dl.getConnection("CollegeConnection");
         assert(connected);
     }
 
