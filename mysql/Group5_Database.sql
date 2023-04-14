@@ -63,8 +63,8 @@ CREATE TABLE Student_Keyword
     studentID int,
     keywordID int,
     PRIMARY KEY (studentID, keywordID),
-    FOREIGN KEY (studentID) REFERENCES Faculty(facultyID),
-    FOREIGN KEY (keywordID) REFERENCES Student(studentID)
+    FOREIGN KEY (studentID) REFERENCES Student(studentID),
+    FOREIGN KEY (keywordID) REFERENCES Student_Topic(keyword_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Guest(
@@ -84,8 +84,8 @@ CREATE TABLE Guest_Keyword
     guestID int,
     keywordID int,
     PRIMARY KEY (guestID, keywordID),
-    FOREIGN KEY (guestID) REFERENCES Faculty(facultyID),
-    FOREIGN KEY (keywordID) REFERENCES Guest(guestID)
+    FOREIGN KEY (guestID) REFERENCES Guest(guestID),
+    FOREIGN KEY (keywordID) REFERENCES Guest_Topic(keyword_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --SET FOREIGN_KEY_CHECKS = 1;
