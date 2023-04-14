@@ -5,6 +5,7 @@
  */
 package presentationlayer;
 import datalayer.DataLayer;
+import presentationlayer.PassMask;
 import java.io.*;
 import java.sql.*;
 import java.util.Scanner;
@@ -22,8 +23,8 @@ public class frontend {
             dl.setUserName(scanner.nextLine());
             
             
-            System.out.print("\nPassword: ");
-            dl.setPassword(scanner.nextLine());
+            
+            dl.setPassword(PassMask.mask());
 
             
             dl.getConnection("CollegeConnection");
