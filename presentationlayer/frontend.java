@@ -15,12 +15,13 @@ public class frontend {
     private Scanner scanner = new Scanner(System.in);
 
     frontend(){
-        dl.loadDriver(); //Load the driver
-        if(dl.getConnection("CollegeConnections")){
-            System.out.println("Connection to CollegeConnections successful!");
-        } else {
-
+        try{
+            dl.loadDriver(); //Load the driver
+            dl.getConnection("CollegeConnection");
+        } catch (Exception e){
+            
         }
+        
     }
 
     /**
@@ -45,6 +46,7 @@ public class frontend {
 
             switch(user_selection){
                 case 1:
+                    facultyCommands();
                     break;
                 case 2:
                     break;
@@ -84,8 +86,7 @@ public class frontend {
         System.out.println("\t 1: \t Find Faculty Member");
         System.out.println("\t 2: \t Add Faculty Member");
         System.out.println("\t 3: \t Add Faculty Abstract");
-        System.out.println("\t 4: \t Add Faculty Keyword");
-        System.out.println("\t 5: \t Back");
+        System.out.println("\t 4: \t Back");
         //Query the user for an option.
         System.out.print("\n Selection: ");
         String str_input = scanner.nextLine(); //The variable that stores the string input
@@ -95,8 +96,33 @@ public class frontend {
 
             switch(user_command){
                 case 1:
+                    System.out.println("ERROR: this command is not operational at this time. Please select a different one.");
+                    facultyCommands();
                     break;
-                case 2:
+                case 2: //Add faculty member
+                    System.out.println("\n Please enter faculty ");
+
+                    System.out.print("\n\tFirst Name: ");
+                    String fname = scanner.nextLine();
+
+                    System.out.print("\n\tLast Name: ");
+                    String lname = scanner.nextLine();
+
+                    System.out.print("\n\tEmail: ");
+                    String email = scanner.nextLine();
+
+                    //Will need to modify this line so that it requires a user 
+                    System.out.print("\n\tPassword: ");
+                    String password = scanner.nextLine();
+
+                    System.out.print("\n\tPhone: ");
+                    String phone = scanner.nextLine();
+
+                    System.out.print("\n\tAddress: ");
+                    str_input = scanner.nextLine(); //Faculty address
+
+
+                    dl.addFacultyMember(fname, lname, email, password, phone, str_input);
                     break;
                 case 3: //Add faculty abstract
                     System.out.println("\nEnter Faculty Topic");
@@ -104,13 +130,13 @@ public class frontend {
                     str_input = scanner.nextLine(); //get the faculty ID
                     user_command = Integer.parseInt(str_input); //convert ID to integer.
 
-                    System.out.println("\t Please enter the abstract ");
-                    System.out.print("\n\t\tTitle: ");
+                    System.out.println("Please enter the abstract ");
+                    System.out.print("\n\tTitle: ");
                     
-                    str_input = scanner.nextLine(); //Get the faculty topic.
+                    str_input = scanner.nextLine(); //Get the abstract title.
                     String title = str_input; //Get the title
 
-                    System.out.println("\n\t\tDescription: ");
+                    System.out.println("\n\tDescription: ");
                     str_input = scanner.nextLine(); //Get the description
 
                     int abstractID = dl.addAbstract(title, str_input); //Add the faculty abstract to the table
