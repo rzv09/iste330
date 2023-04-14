@@ -63,8 +63,10 @@ public class frontend {
                     facultyCommands();
                     break;
                 case 2:
+                    studentCommands();
                     break;
                 case 3:
+                    guestCommands();
                     break;
                 case 4: //Rebuild Tables
                     dl.rebuildTables();
@@ -174,7 +176,9 @@ public class frontend {
 
 
 
-
+    /**
+     * A method which presents the user with commands regarding students.
+     */
     private void studentCommands(){
         int user_command = 0; //The variable that stores what the user input.
 
@@ -182,7 +186,8 @@ public class frontend {
         System.out.println("\t 1: \t Find Student");
         System.out.println("\t 2: \t Add Student");
         System.out.println("\t 3: \t Add Student Topic");
-        System.out.println("\t 4: \t Back");
+        System.out.println("\t 4: \t Find Student Match");
+        System.out.println("\t 5: \t Back");
         //Query the user for an option.
         System.out.print("\n Selection: ");
         String str_input = scanner.nextLine(); //The variable that stores the string input
@@ -231,7 +236,10 @@ public class frontend {
                         //Insert into interim table
                     }
                     break;
-                case 4: //Back
+                case 4:
+                    
+                    break;
+                case 5: //Back
                     break;
                 default:
                     System.out.println("Unrecognized selection...");
@@ -244,6 +252,80 @@ public class frontend {
             e.printStackTrace();
         }
     } //End of studentCommands
+
+
+
+
+    /**
+     * A method which presents the user with commands regarding guests.
+     */
+    private void guestCommands(){
+        int user_command = 0; //The variable that stores what the user input.
+
+        System.out.println("\nSelect a Command:");
+        System.out.println("\t 1: \t Find Guest");
+        System.out.println("\t 2: \t Add Guest");
+        System.out.println("\t 3: \t Add Guest Topic");
+        System.out.println("\t 4: \t Back");
+        //Query the user for an option.
+        System.out.print("\n Selection: ");
+        String str_input = scanner.nextLine(); //The variable that stores the string input
+
+        try{
+            user_command = Integer.parseInt(str_input); //Convert string to integer.
+
+            switch(user_command){
+                case 1:
+                    System.out.println("ERROR: this command is not operational at this time. Please select a different one.");
+                    guestCommands();
+                    break;
+                case 2: //Add guest
+                    System.out.println("\n Please enter guest ");
+
+                    System.out.print("\n\tName: ");
+                    String name = scanner.nextLine();
+
+                    System.out.print("\n\tEmail: ");
+                    String email = scanner.nextLine();
+
+                    //Will need to modify this line so that it requires a user to confirm
+                    //the password
+                    String password = PassMask.mask();
+
+
+                    dl.addGuest(name, email, password);
+                    break;
+                case 3: //Add student topic
+                    System.out.print("\n Guest ID: ");
+                    str_input = scanner.nextLine(); //get the guest ID
+                    user_command = Integer.parseInt(str_input); //convert ID to integer.
+
+                    System.out.println("Please enter the topic ");
+                    System.out.print("\n\tTopic: ");
+                    
+                    str_input = scanner.nextLine(); //Get the keyword.
+
+
+                    int topicID = dl.addGuestTopic(str_input); //Add the guest topic to the table
+                    if(topicID == -1){
+                        //Do nothing if the method failed
+                    } else{
+                        //Insert into interim table
+                    }
+                    break;
+                case 4: //Back
+                    break;
+                default:
+                    System.out.println("Unrecognized selection...");
+                    guestCommands();
+                    break;
+            }//End of switch
+        }//End of try
+        catch(Exception e) {
+            System.out.println("ERROR: could not parse selection to integer.");
+            e.printStackTrace();
+        }
+    } //End of guestCommands
 
 
 
