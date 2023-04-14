@@ -1,1 +1,6 @@
 This will be a directions file for the project
+
+File: directions.txt
+Author: Declan Naughton
+
+1. Source mysql/Group5_Database.sql
