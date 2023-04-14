@@ -102,6 +102,7 @@ public class frontend {
                     break;
                 case 4: //Add faculty keyword
                     System.out.println("\nEnter Faculty Topic");
+                    System.out.print("\n Faculty ID");
                     break;
                 case 5: //Back
                     break;
