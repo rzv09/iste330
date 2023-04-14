@@ -17,7 +17,18 @@ public class frontend {
     frontend(){
         try{
             dl.loadDriver(); //Load the driver
+            
+            System.out.print("\nUsername: ");
+            dl.setUserName(scanner.nextLine());
+            
+            
+            System.out.print("\nPassword: ");
+            dl.setPassword(scanner.nextLine());
+
+            
             dl.getConnection("CollegeConnection");
+
+            interpretOption();
         } catch (Exception e){
             
         }
@@ -125,7 +136,6 @@ public class frontend {
                     dl.addFacultyMember(fname, lname, email, password, phone, str_input);
                     break;
                 case 3: //Add faculty abstract
-                    System.out.println("\nEnter Faculty Topic");
                     System.out.print("\n Faculty ID: ");
                     str_input = scanner.nextLine(); //get the faculty ID
                     user_command = Integer.parseInt(str_input); //convert ID to integer.
@@ -151,6 +161,80 @@ public class frontend {
                 default:
                     System.out.println("Unrecognized selection...");
                     facultyCommands();
+                    break;
+            }//End of switch
+        }//End of try
+        catch(Exception e) {
+            System.out.println("ERROR: could not parse selection to integer.");
+            e.printStackTrace();
+        }
+    } //End of facultyCommands
+
+
+
+
+    private void studentCommands(){
+        int user_command = 0; //The variable that stores what the user input.
+
+        System.out.println("\nSelect a Command:");
+        System.out.println("\t 1: \t Find Student");
+        System.out.println("\t 2: \t Add Student");
+        System.out.println("\t 3: \t Add Student Topic");
+        System.out.println("\t 4: \t Back");
+        //Query the user for an option.
+        System.out.print("\n Selection: ");
+        String str_input = scanner.nextLine(); //The variable that stores the string input
+
+        try{
+            user_command = Integer.parseInt(str_input); //Convert string to integer.
+
+            switch(user_command){
+                case 1:
+                    System.out.println("ERROR: this command is not operational at this time. Please select a different one.");
+                    studentCommands();
+                    break;
+                case 2: //Add student
+                    System.out.println("\n Please enter student ");
+
+                    System.out.print("\n\tFirst Name: ");
+                    String fname = scanner.nextLine();
+
+                    System.out.print("\n\tLast Name: ");
+                    String lname = scanner.nextLine();
+
+                    System.out.print("\n\tEmail: ");
+                    String email = scanner.nextLine();
+
+                    //Will need to modify this line so that it requires a user 
+                    System.out.print("\n\tPassword: ");
+                    String password = scanner.nextLine();
+
+
+                    dl.addStudent(fname, lname, email, password);
+                    break;
+                case 3: //Add student topic
+                    System.out.print("\n Student ID: ");
+                    str_input = scanner.nextLine(); //get the student ID
+                    user_command = Integer.parseInt(str_input); //convert ID to integer.
+
+                    System.out.println("Please enter the topic ");
+                    System.out.print("\n\tTopic: ");
+                    
+                    str_input = scanner.nextLine(); //Get the keyword.
+
+
+                    int topicID = dl.addStudentTopic(str_input); //Add the faculty abstract to the table
+                    if(topicID == -1){
+                        //Do nothing if the function failed
+                    } else{
+                        //Insert into interim table
+                    }
+                    break;
+                case 4: //Back
+                    break;
+                default:
+                    System.out.println("Unrecognized selection...");
+                    studentCommands();
                     break;
             }//End of switch
         }//End of try
