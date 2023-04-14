@@ -24,7 +24,14 @@ public class frontend {
             dl.setUserName(scanner.nextLine());
             
             
-            String pass = PassMask.mask();
+            String pass;
+            try{
+                pass = PassMask.mask();
+            } catch (Exception e){
+                System.out.println("Warning: Unable to hide your password. Please proceed with caution.");
+                System.out.print("\nPassword: ");
+                pass = scanner.nextLine();
+            }
             //System.out.println(pass);
             dl.setPassword(pass);
 
