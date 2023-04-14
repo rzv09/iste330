@@ -11,6 +11,9 @@ Author: Declan Naughton
 corresponding to a number. Enter one of the listed numbers to see the commands
 in that category.
 6. You will be presented with a list of commands, each corresponding to a number.
-Enter one of the listed numbers to begin execution of a command.
+Enter one of the listed numbers to begin execution of a command.*
 7. The program will walk you through step-by step of what information you need
 to enter.
+
+*Note that each of the 'Find' commands for each category have not yet been implemented
+or properly coded.
