@@ -84,7 +84,7 @@ public class showoff {
         dl.addStudentKeyword(s2, t9);
 
         Set<Integer> IDs = dl.getStudentMatches(s2);
-
+        System.out.println("Finding Faculty Matches for Victor Laurence...");
         Iterator<Integer> iter = IDs.iterator();
                     System.out.println("Possible Faculty Matches: ");
                     while(iter.hasNext()){
