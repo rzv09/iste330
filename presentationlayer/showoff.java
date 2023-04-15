@@ -46,16 +46,21 @@ public class showoff {
         "of Galbatorix's empire, his warcrimes, and how a people's rebellion fueled by "+
         "merchants brought about his end.");
         dl.assignAbstract(f1, a1);
-        int t1 = dl.addFacultyTopic("Mythology");
+        int t1 = dl.addFacultyTopic("magic");
         dl.addFacultyKeyword(a1, t1);
-        int t2 = dl.addFacultyTopic("History");
+        int t2 = dl.addFacultyTopic("history");
         dl.addFacultyKeyword(a1, t2);
 
         int f2 = dl.addFacultyMember("Harley", "Warren", "barrow_sleeper04@unspeakable.yog", "Ry'Leh", "106-559-1922", "200 Miskatonic University, Arkham");
         dl.printFacultyMember(f2);
-        int t3 = dl.addFacultyTopic("Quantum Physics");
-        int t4 = dl.addFacultyTopic("Mythology");
-        int t5 = dl.addFacultyTopic("Xenobiology");
+
+        int a2 = dl.addAbstract("The Dreamers of the Deep", "A dissertation on the horrors of "+
+        "the great old ones and evils archived in the infamous necronomicon.");
+        dl.assignAbstract(f2, a2);
+
+        int t3 = dl.addFacultyTopic("quantum physics");
+        int t4 = dl.addFacultyTopic("mythology");
+        int t5 = dl.addFacultyTopic("xenobiology");
 
         dl.addFacultyKeyword(f2, t3);
         dl.addFacultyKeyword(f2, t4);
@@ -64,13 +69,19 @@ public class showoff {
         int s1 = dl.addStudent("Luke", "Skywalker", "NewHope@force.echo", "0604BWU");
         dl.printStudent(s1);
 
-        int t6 = dl.addStudentTopic("Mythology");
-        int t7 = dl.addStudentTopic("War");
-        int t8 = dl.addStudentTopic("Empire");
+        int t6 = dl.addStudentTopic("mythology");
+        int t7 = dl.addStudentTopic("war");
+        int t8 = dl.addStudentTopic("empire");
 
         dl.addStudentKeyword(s1, t6);
         dl.addStudentKeyword(s1, t7);
         dl.addStudentKeyword(s1, t8);
+
+        int s2 = dl.addStudent("Victor", "Laurence", "holyvicar@old.blood", "FearTheOldBlood");
+        int t9 = dl.addStudentTopic("evil");
+        int t10 = dl.addStudentTopic("blood");
+        dl.addStudentKeyword(s2, t10);
+        dl.addStudentKeyword(s2, t9);
 
         Set<Integer> IDs = dl.getStudentMatches(s1);
 
