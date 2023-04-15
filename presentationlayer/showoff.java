@@ -93,6 +93,30 @@ public class showoff {
                         output += "\n Faculty ID: "+i;
                         System.out.println(output);
                     }
+        
+
+
+        int g1 = dl.addGuest("Dark Somnium", "SpookySpaghetti@gmail.com", "Tenebris");
+        int gt1 = dl.addGuestTopic("evil");
+        int gt2 = dl.addGuestTopic("terror");
+        int gt3 = dl.addGuestTopic("blood");
+        dl.addGuestKeyword(g1, gt1);
+        dl.addGuestKeyword(g1, gt2);
+        dl.addGuestKeyword(g1, gt3);
+
+
+        IDs = dl.getStudentMatches(s2);
+        System.out.println("Finding Faculty Matches for Dark Somnium...");
+        iter = IDs.iterator();
+                    System.out.println("Possible Faculty Matches: ");
+                    while(iter.hasNext()){
+                        int i = iter.next();
+                        String output = dl.printFacultyMember(i);
+                        output += "\n Faculty ID: "+i;
+                        System.out.println(output);
+                    }
+
+
         dl.rebuildTables();
     }
     public static void main(String[] args) {
