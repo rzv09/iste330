@@ -326,8 +326,10 @@ public class frontend {
 
             switch(user_command){
                 case 1:
-                    System.out.println("ERROR: this command is not operational at this time. Please select a different one.");
-                    guestCommands();
+                    System.out.print("GuestID: ");
+                    str_input = scanner.nextLine();
+                    user_command = Integer.parseInt(str_input);
+                    System.out.println(dl.printGuest(user_command));
                     break;
                 case 2: //Add guest
                     System.out.println("\n Please enter guest ");
@@ -365,7 +367,14 @@ public class frontend {
                         System.out.println("Topic added to guest.");
                     }
                     break;
-                case 4: //Back
+                
+                case 4: //Find match
+                    System.out.print("\n Guest ID: ");
+                    str_input = scanner.nextLine(); //get the guest ID
+                    user_command = Integer.parseInt(str_input); //convert ID to integer.
+                    break;
+                
+                case 5: //Back
                     break;
                 default:
                     System.out.println("Unrecognized selection...");

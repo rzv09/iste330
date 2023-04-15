@@ -105,7 +105,7 @@ public class showoff {
         dl.addGuestKeyword(g1, gt3);
 
 
-        IDs = dl.getStudentMatches(s2);
+        IDs = dl.getStudentMatches(g1);
         System.out.println("Finding Faculty Matches for Dark Somnium...");
         iter = IDs.iterator();
                     System.out.println("Possible Faculty Matches: ");
