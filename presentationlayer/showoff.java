@@ -72,9 +72,16 @@ public class showoff {
         dl.addStudentKeyword(s1, t7);
         dl.addStudentKeyword(s1, t8);
 
-        dl.getStudentMatches(s1);
+        Set<Integer> IDs = dl.getStudentMatches(s1);
 
-        
+        Iterator<Integer> iter = IDs.iterator();
+                    System.out.println("Possible Faculty Matches: ");
+                    while(iter.hasNext()){
+                        int i = iter.next();
+                        String output = dl.printFacultyMember(i);
+                        output += "\n Faculty ID: "+i;
+                        System.out.println(output);
+                    }
     }
     public static void main(String[] args) {
         showoff s = new showoff();
