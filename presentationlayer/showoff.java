@@ -6,7 +6,10 @@ import java.sql.*;
 import java.util.Scanner;
 import java.util.*;
 
-
+/**
+ * Showoff.java is a class and program designed to test the basic capabilities
+ * of the data layer, primarily the matching methods.
+ */
 public class showoff {
     DataLayer dl = new DataLayer(); //The datalayer
     private Scanner scanner = new Scanner(System.in);
@@ -51,9 +54,11 @@ public class showoff {
         int t2 = dl.addFacultyTopic("history");
         dl.addFacultyKeyword(a1, t2);
 
+        System.out.println("Adding Faculty: Harley Warren");
         int f2 = dl.addFacultyMember("Harley", "Warren", "barrow_sleeper04@unspeakable.yog", "Ry'Leh", "106-559-1922", "200 Miskatonic University, Arkham");
         dl.printFacultyMember(f2);
 
+        System.out.println("Giving Warren an abstract...");
         int a2 = dl.addAbstract("The Dreamers of the Deep", "A dissertation on the horrors of "+
         "the great old ones and evils archived in the infamous necronomicon.");
         dl.assignAbstract(f2, a2);
@@ -66,21 +71,14 @@ public class showoff {
         dl.addFacultyKeyword(f2, t4);
         dl.addFacultyKeyword(f2, t5);
 
-        int s1 = dl.addStudent("Luke", "Skywalker", "NewHope@force.echo", "0604BWU");
-        dl.printStudent(s1);
-
-        int t6 = dl.addStudentTopic("mythology");
-        int t7 = dl.addStudentTopic("war");
-        int t8 = dl.addStudentTopic("empire");
-
-        dl.addStudentKeyword(s1, t6);
-        dl.addStudentKeyword(s1, t7);
-        dl.addStudentKeyword(s1, t8);
-
+        System.out.println("Adding Student: Victor Laurence");
         int s2 = dl.addStudent("Victor", "Laurence", "holyvicar@old.blood", "FearTheOldBlood");
+        System.out.println(dl.printStudent(s2));
         int t9 = dl.addStudentTopic("evil");
         int t10 = dl.addStudentTopic("blood");
+        System.out.println("Giving Laurence an interest in blood.");
         dl.addStudentKeyword(s2, t10);
+        System.out.println("Giving Laurence an interest in evil.");
         dl.addStudentKeyword(s2, t9);
 
         Set<Integer> IDs = dl.getStudentMatches(s2);
@@ -96,12 +94,17 @@ public class showoff {
         
 
 
+        System.out.println("Adding Guest: Dark Somnium");
         int g1 = dl.addGuest("Dark Somnium", "SpookySpaghetti@gmail.com", "Tenebris");
+        System.out.println(dl.printGuest(g1));
         int gt1 = dl.addGuestTopic("evil");
         int gt2 = dl.addGuestTopic("terror");
         int gt3 = dl.addGuestTopic("blood");
+        System.out.println("Giving Dark Somnium the topic of evil...");
         dl.addGuestKeyword(g1, gt1);
+        System.out.println("Giving Dark Somnium the topic of terror...");
         dl.addGuestKeyword(g1, gt2);
+        System.out.println("Giving Dark Somnium the topic of blood...");
         dl.addGuestKeyword(g1, gt3);
 
 
