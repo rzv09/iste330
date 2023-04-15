@@ -111,7 +111,7 @@ public class frontend {
         System.out.println("\t 2: \t Add Faculty Member");
         System.out.println("\t 3: \t Add Faculty Abstract");
         System.out.println("\t 4: \t Add Faculty Topic");
-        System.out.println("\t 5: \t Add Faculty Topic");
+        System.out.println("\t 5: \t Back");
         //Query the user for an option.
         System.out.print("\n Selection: ");
         String str_input = scanner.nextLine(); //The variable that stores the string input
