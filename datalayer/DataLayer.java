@@ -107,7 +107,7 @@ public class DataLayer {
 
     /**
      * Author: Declan Naughton
-     * 
+     *
      * A getter method that prints a faculty member's first and last name, their
      * email address, and phone number.
      * @param facultyID
@@ -120,7 +120,7 @@ public class DataLayer {
             //Prepare the statement
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, facultyID);
-            
+
             rs = ps.executeQuery(); //Resultset
             rs.next();
 
@@ -141,7 +141,7 @@ public class DataLayer {
 
 
     /**
-     * 
+     *
      * @param firstName
      * @param lastName
      * @param email
@@ -208,10 +208,10 @@ public class DataLayer {
 
     /**
      * Author: Declan Naughton
-     * 
+     *
      * Assigns an abstract to the faculty member that created it.
      * @param facultyID
-     * @param description
+     * @param abstractID
      * @return
      */
     public boolean assignAbstract(int facultyID, int abstractID) {
@@ -371,10 +371,10 @@ public class DataLayer {
 
     /**
      * Author: Declan Naughton
-     * 
+     *
      * A getter method that stringifies a student's first and last name,
      * and their email address
-     * @param facultyID
+     * @param studentID
      * @return
      */
     public String printStudent(int studentID){
@@ -384,7 +384,7 @@ public class DataLayer {
             //Prepare the statement
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, studentID);
-            
+
             rs = ps.executeQuery(); //Resultset
             rs.next();
 
@@ -502,7 +502,7 @@ public class DataLayer {
             sql = "SELECT DISTINCT facultyID FROM faculty_abstract fa " +
                     "JOIN abstract a on fa.abstractID = a.abstractID " +
                     "WHERE description LIKE '%'+" +
-                        "(SELECT CONCAT_WS('|', keyword) FROM student_keyword sk " +
+                        "(SELECT GROUP_CONCAT(keyword SEPARATOR '|') FROM student_keyword sk " +
                         "JOIN student_topic st ON st.keyword_ID = sk.keywordID WHERE sk.studentID = ?)" +
                     "+'%'";
             ps = conn.prepareStatement(sql);
