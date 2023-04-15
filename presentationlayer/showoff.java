@@ -8,7 +8,12 @@ import java.util.*;
 
 /**
  * Showoff.java is a class and program designed to test the basic capabilities
- * of the data layer, primarily the matching methods.
+ * of the data layer, primarily the matching methods. This program creates
+ * numerous students, faculty members, and a guest and assigns them each a series
+ * of topics with similar names. Furthermore, the faculty have abstracts 
+ * whose descriptions contain words which match the topics of the guests and
+ * students. This is to test if the match methods can detect keywords within
+ * strings instead of just matching strings character for character.
  */
 public class showoff {
     DataLayer dl = new DataLayer(); //The datalayer
