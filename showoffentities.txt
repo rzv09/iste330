@@ -1,6 +1,0 @@
-Showoff.java has a few items which have been added to to test the matching capabilities
-of the data layer. Some of these items are listed below:
-Faculty:
-fname: 'Darth', 
-lname: 'Vader', 
-email: 'dv1234@deathstar.com', 'anakin','123456790, 1 Death Star'
