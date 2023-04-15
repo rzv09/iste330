@@ -500,7 +500,7 @@ public class DataLayer {
                 ids.add(rs.getInt(1));
             }
             sql = "SELECT DISTINCT facultyID FROM Faculty_Abstract fa " +
-                    "JOIN abstract a on fa.abstractID = a.abstractID " +
+                    "JOIN Abstract a on fa.abstractID = a.abstractID " +
                     "WHERE description LIKE '%'||" +
                         "(SELECT GROUP_CONCAT(keyword SEPARATOR '|') FROM Student_Keyword sk " +
                         "JOIN Student_Topic st ON st.keyword_ID = sk.keywordID WHERE sk.studentID = ?)" +
