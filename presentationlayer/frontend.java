@@ -372,6 +372,15 @@ public class frontend {
                     System.out.print("\n Guest ID: ");
                     str_input = scanner.nextLine(); //get the guest ID
                     user_command = Integer.parseInt(str_input); //convert ID to integer.
+                    Set<Integer> IDs = dl.getGuestMatches(user_command);
+                    Iterator<Integer> iter = IDs.iterator();
+                    System.out.println("Possible Faculty Matches: ");
+                    while(iter.hasNext()){
+                        int i = iter.next();
+                        String output = dl.printFacultyMember(i);
+                        output += "\n Faculty ID: "+i;
+                        System.out.println(output);
+                    }
                     break;
                 
                 case 5: //Back
