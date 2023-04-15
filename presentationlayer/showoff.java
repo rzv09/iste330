@@ -39,7 +39,7 @@ public class showoff {
     }
 
     public void run(){
-        dl.rebuildTables();
+        //dl.rebuildTables();
         int f1 = dl.addFacultyMember("Brom", "Holcombson", "Ironscale@varden.org", "Saphira1", "908-124-7871", "5 Carvahall Rd");
         dl.printFacultyMember(f1);
         int a1 = dl.addAbstract("The Fall of Morzan", "In this abstract we discuss "+
@@ -93,6 +93,7 @@ public class showoff {
                         output += "\n Faculty ID: "+i;
                         System.out.println(output);
                     }
+        dl.rebuildTables();
     }
     public static void main(String[] args) {
         showoff s = new showoff();
