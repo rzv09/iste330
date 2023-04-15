@@ -3,6 +3,7 @@ This will be a directions file for the project
 File: directions.txt
 Author: Declan Naughton
 
+To run the command line ui:
 1. Source mysql/Group5_Database.sql
 2. Run the main method in the file, presentationlayer/frontend.java;
 3. Enter your username. Should be 'root' by default for now.
@@ -17,3 +18,8 @@ to enter.
 
 *Note that each of the 'Find' commands for each category have not yet been implemented
 or properly coded.
+
+To run the preprogrammed, fixed datalayer demonstration:
+1. Source mysql/Group5_Database.sql
+2. Source mysql/inserts.sql
+3. Run the main method in the file, presentationlayer/showoff.java
