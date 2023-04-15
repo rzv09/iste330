@@ -83,7 +83,7 @@ public class showoff {
         dl.addStudentKeyword(s2, t10);
         dl.addStudentKeyword(s2, t9);
 
-        Set<Integer> IDs = dl.getStudentMatches(s1);
+        Set<Integer> IDs = dl.getStudentMatches(s2);
 
         Iterator<Integer> iter = IDs.iterator();
                     System.out.println("Possible Faculty Matches: ");
