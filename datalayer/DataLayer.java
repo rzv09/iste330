@@ -107,7 +107,7 @@ public class DataLayer {
 
     /**
      * Author: Declan Naughton
-     * 
+     *
      * A getter method that prints a faculty member's first and last name, their
      * email address, and phone number.
      * @param facultyID
@@ -120,7 +120,7 @@ public class DataLayer {
             //Prepare the statement
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, facultyID);
-            
+
             rs = ps.executeQuery(); //Resultset
             rs.next();
 
@@ -141,7 +141,7 @@ public class DataLayer {
 
 
     /**
-     * 
+     *
      * @param firstName
      * @param lastName
      * @param email
@@ -208,10 +208,10 @@ public class DataLayer {
 
     /**
      * Author: Declan Naughton
-     * 
+     *
      * Assigns an abstract to the faculty member that created it.
      * @param facultyID
-     * @param description
+     * @param abstractID
      * @return
      */
     public boolean assignAbstract(int facultyID, int abstractID) {
@@ -371,10 +371,10 @@ public class DataLayer {
 
     /**
      * Author: Declan Naughton
-     * 
+     *
      * A getter method that stringifies a student's first and last name,
      * and their email address
-     * @param facultyID
+     * @param studentID
      * @return
      */
     public String printStudent(int studentID){
@@ -384,7 +384,7 @@ public class DataLayer {
             //Prepare the statement
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, studentID);
-            
+
             rs = ps.executeQuery(); //Resultset
             rs.next();
 
@@ -489,21 +489,21 @@ public class DataLayer {
     public Set<Integer> getStudentMatches(int studentID) {
         Set<Integer> ids = new HashSet<>();
         try {
-            sql = "SELECT DISTINCT fk.facultyID FROM faculty_keyword fk " +
-                    "JOIN faculty_topic ft on ft.keyword_ID = fk.keywordID " +
+            sql = "SELECT DISTINCT fk.facultyID FROM Faculty_Keyword fk " +
+                    "JOIN Faculty_Topic ft on ft.keyword_ID = fk.keywordID " +
                     "WHERE keyword IN " +
-                    "(SELECT keyword FROM student_keyword sk JOIN student_topic st ON st.keyword_ID = sk.keywordID WHERE sk.studentID = ?)";
+                    "(SELECT keyword FROM Student_Keyword sk JOIN Student_Topic st ON st.keyword_ID = sk.keywordID WHERE sk.studentID = ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, studentID);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 ids.add(rs.getInt(1));
             }
-            sql = "SELECT DISTINCT facultyID FROM faculty_abstract fa " +
+            sql = "SELECT DISTINCT facultyID FROM Faculty_Abstract fa " +
                     "JOIN abstract a on fa.abstractID = a.abstractID " +
                     "WHERE description LIKE '%'+" +
-                        "(SELECT CONCAT_WS('|', keyword) FROM student_keyword sk " +
-                        "JOIN student_topic st ON st.keyword_ID = sk.keywordID WHERE sk.studentID = ?)" +
+                        "(SELECT GROUP_CONCAT(keyword SEPARATOR '|') FROM Student_Keyword sk " +
+                        "JOIN Student_Topic st ON st.keyword_ID = sk.keywordID WHERE sk.studentID = ?)" +
                     "+'%'";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, studentID);
