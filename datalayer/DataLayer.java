@@ -523,7 +523,7 @@ public class DataLayer {
      * Author: Declan Naughton
      *
      * A getter method that stringifies a guest's name and email.
-     * @param studentID
+     * @param guestID
      * @return
      */
     public String printGuest(int guestID){
@@ -550,7 +550,43 @@ public class DataLayer {
         }
     }
 
-
+    /**
+     * Author: Maple
+     * 
+     * @param guestID
+     * @return
+     */
+    public Set<Integer> getGuestMatches(int guestID) {
+        Set<Integer> ids = new HashSet<>();
+        try {
+            sql = "SELECT DISTINCT fk.facultyID FROM Faculty_Keyword fk " +
+                    "JOIN Faculty_Topic ft on ft.keyword_ID = fk.keywordID " +
+                    "WHERE keyword IN " +
+                    "(SELECT keyword FROM Guest_Keyword gk JOIN Guest_Topic gt ON gt.keyword_ID = gk.keywordID WHERE gk.studentID = ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, guestID);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                ids.add(rs.getInt(1));
+            }
+            sql = "SELECT DISTINCT facultyID FROM Faculty_Abstract fa " +
+                    "JOIN Abstract a on fa.abstractID = a.abstractID " +
+                    "WHERE description REGEXP " +
+                        "(SELECT GROUP_CONCAT(keyword SEPARATOR '|') FROM Guest_Keyword gk " +
+                        "JOIN Guest_Topic gt ON gt.keyword_ID = gk.keywordID WHERE gk.studentID = ?)";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, guestID);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                ids.add(rs.getInt(1));
+            }
+        }
+        catch (SQLException sqle) {
+            System.out.println("Error: could not find a match for the guest's topic");
+            sqle.printStackTrace();
+        }
+        return ids;
+    }
 
 
 }
