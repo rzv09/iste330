@@ -23,3 +23,5 @@ To run the preprogrammed, fixed datalayer demonstration:
 1. Source mysql/Group5_Database.sql
 2. Source mysql/inserts.sql
 3. Run the main method in the file, presentationlayer/showoff.java
+4. Enter your username.
+5. Enter your sql password (it may not appear).
