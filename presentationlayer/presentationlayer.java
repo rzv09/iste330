@@ -25,29 +25,9 @@ public class presentationlayer {
     presentationlayer(){
         try{
             dl.loadDriver(); //Load the driver
-            
-            System.out.print("\nUsername: ");
-            dl.setUserName(scanner.nextLine());
-            
-            
-            String pass;
-            try{
-                pass = PassMask.mask();
-            } catch (Exception e){
-                System.out.println("Warning: Unable to hide your password. Please proceed with caution.");
-                System.out.print("\nPassword: ");
-                pass = scanner.nextLine();
-            }
-            //System.out.println(pass);
-            dl.setPassword(pass);
-
-            dl.getConnection("CollegeConnection");
-
-            interpretOption();
-
-
         } catch (Exception e){
-            
+            System.out.println("Error: Could not load driver.");
+            e.printStackTrace();
         }
         
     }
@@ -413,8 +393,19 @@ public class presentationlayer {
      */
     public void loginSQL(){
         //Create login panel
-        JPanel Inputbox = new JPanel(new GridLayout(2,2));
+        JPanel Inputbox = new JPanel(new GridLayout(3,2));
 
+        //Create database input
+        JLabel lblDB = new JLabel("SQL Database Name -> ");
+            JTextField tfDB = new JTextField("CollegeConnection");
+            //Add field to box.
+            Inputbox.add(lblDB);
+            Inputbox.add(tfDB);
+            //Set Font
+            lblDB.setFont(defaultFont);
+            tfDB.setFont(defaultFont);
+            //Set Font Colour
+            tfDB.setForeground(Color.BLUE);
         //Create username input
         JLabel lblUser     = new JLabel("SQL Username  -> ");
             JTextField tfUser     = new JTextField("root");
@@ -438,8 +429,17 @@ public class presentationlayer {
             Inputbox.add(lblPassword);
             Inputbox.add(tfPassword);
         
+            //Set the title of the input box
         JOptionPane.showMessageDialog(null, Inputbox,
             "SQL Login", JOptionPane.INFORMATION_MESSAGE);
+        
+        String uName = tfUser.getText(); //Get the username entered
+        String password = tfPassword.getText(); //Get the password entered
+        String DBName = tfDB.getText(); //Get the database name
+
+        dl.setUserName(uName);
+        dl.setPassword(password);
+        dl.getConnection(DBName);
     }
 
 
