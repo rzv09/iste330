@@ -129,7 +129,6 @@ DELIMITER //
 CREATE PROCEDURE addStudentKeyword(
 	IN in_studentID INT,
 	IN in_word VARCHAR(80)
-	OUT out_keywordID
 )
 BEGIN
 	DECLARE wordID INT; -- Store the ID of the keyword
@@ -148,6 +147,35 @@ BEGIN
 	-- Insert the record
 	INSERT INTO student_keyword(StudentID, KeywordID)
 	VALUES (in_studentID, wordID);
+END//
+DELIMITER ;
+
+
+
+-- Adds a keyword to a faculty member
+DROP PROCEDURE IF EXISTS addFacultyKeyword;
+DELIMITER //
+CREATE PROCEDURE addFacultyKeyword(
+	IN in_facultyID INT,
+	IN in_word VARCHAR(80)
+)
+BEGIN
+	DECLARE wordID INT; -- Store the ID of the keyword
+
+	-- Test if the word already exists in the table of keywords.
+	IF in_word NOT IN (SELECT keywords.word) THEN
+		-- If the word doesn't already exist, in the table, insert it
+		INSERT INTO keywords (word) VALUES (in_word);
+	END IF;
+
+	-- Get the ID of the word in the keywords table
+	SELECT keywords.KeywordID INTO wordID
+	FROM keywords
+	WHERE keywords.word LIKE in_word;
+
+	-- Insert the record
+	INSERT INTO faculty_keyword(facultyID, KeywordID)
+	VALUES (in_facultyID, wordID);
 END//
 DELIMITER ;
 
