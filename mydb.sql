@@ -293,6 +293,11 @@ BEGIN
                  JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
                  JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
                  JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
+	ELSEIF keywordThree = '' THEN
+		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
+		FROM faculty
+		JOIN faculty_keyword USING(facultyID)
+		JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
 		WHERE faculty_topics.word LIKE ('%' || keywordOne || '%')
 			OR faculty_topics.word LIKE ('%' || keywordTwo || '%')
             OR (abstract.abs_text LIKE ('%' || keywordOne || '%'))
