@@ -311,14 +311,14 @@ CREATE PROCEDURE Faculty_Keyword_Lookup(
 BEGIN 
 	-- If only one keyword is provided, search using that one keyword.
 	-- Ignore keywordTwo and keywordThree
-	IF keywordTwo = "" THEN
+	IF keywordTwo = '' THEN
 		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
 		FROM faculty
 		JOIN faculty_keyword USING(facultyID)
 		JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
 		WHERE faculty_topics.word LIKE ('%' || keywordOne || '%');
 	-- If only two keywords are provided, ignore keywordThree
-	ELSEIF keywordThree = "" THEN
+	ELSEIF keywordThree = '' THEN
 		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
 		FROM faculty
 		JOIN faculty_keyword USING(facultyID)
@@ -350,14 +350,14 @@ CREATE PROCEDURE Student_Keyword_Lookup(
 BEGIN 
 	-- If only one keyword is provided, search using that one keyword.
 	-- Ignore keywordTwo and keywordThree
-	IF keywordTwo = "" THEN
+	IF keywordTwo = '' THEN
 		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
 		FROM student
 		JOIN student_keyword USING(StudentID)
 		JOIN student_topics ON student_keyword.KeywordID = student_topics.KeywordID
 		WHERE student_topics.word LIKE ('%' || keywordOne || '%');
 	-- If only two keywords are provided, ignore keywordThree
-	ELSEIF keywordThree = "" THEN
+	ELSEIF keywordThree = '' THEN
 		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
 		FROM student
 		JOIN student_keyword USING(StudentID)
