@@ -1,0 +1,30 @@
+directions.txt
+ISTE 330.01 - Habermas, Jim
+Group 5 - Project
+Authors: Raghav, Charki,Maple, Ramanz,
+Date Completed: 04/25/2023
+
+
+Presentation Layer: "Presentation.java"
+
+Start by connecting to the database. Click "Connect to Data Source" and enter "root" as the user and "student" as the password. You can leave these fields blank, and the program will fill them in for you. The program will let you know if the connection was successful or not.
+
+Choose whether you are a faculty member or a student. If you are a returning user, you will need to provide your user ID to log in and access your previously stored information.
+
+If you are a new user, you can add a faculty member by clicking "Add Faculty" and providing their last name, first name, email, and optional building and office numbers. The first faculty member added will have an ID number of 100, and each subsequent addition will increment by 1. The program will confirm if the query was successful.
+
+Alternatively, as a new user, you can add a student by clicking "Add Student" and providing their last name, first name, and email. The program will confirm if the query was successful.
+
+If you are a faculty member, after creating your user entry, you can add an abstract to the database by providing your ID number and the text of the abstract. When you log in again, you can add additional abstracts to the database.
+
+If you are a student, you can search the previously added abstracts by entering 1, 2, or 3 keywords. The program will return information about the faculty member whose abstract matches your search.
+
+To exit the program, click "Exit". The program will confirm if the termination was successful and provide a timestamp.
+
+If you are a returning user:
+
+Choose whether you are a faculty member or a student.
+
+Enter your user ID.
+Provide an abstract text or keyword search, depending on whether you are a faculty member or a student.
+Note that the program's Data Layer, "Backend.java", must be compiled in the same directory as the Presentation Layer for the program to function properly.
