@@ -1,8 +1,8 @@
 -- ISTE 330.01 | Habermas
 -- Group 5 | Project Part 2
--- Raghav, Charki,Maple, Ramanz, 
+-- Raghav, Charki,Maple, Ramanz,
 
-DROP DATABASE IF EXISTS CollegeConnection; 
+DROP DATABASE IF EXISTS CollegeConnection;
 
 CREATE DATABASE CollegeConnection;
 USE CollegeConnection;
@@ -34,13 +34,13 @@ CREATE TABLE faculty_abstract(
 facultyID INT UNSIGNED NOT NULL,
 abstractID INT UNSIGNED NOT NULL,
 PRIMARY KEY (facultyID, abstractID),
-CONSTRAINT faculty_abstract_faculty_FK 
-	FOREIGN KEY (facultyID) 
+CONSTRAINT faculty_abstract_faculty_FK
+	FOREIGN KEY (facultyID)
 	REFERENCES faculty(facultyID)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE,
  CONSTRAINT faculty_abstract_abstract_FK
-	FOREIGN KEY (abstractID)    
+	FOREIGN KEY (abstractID)
 	REFERENCES abstract(abstractID)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE
@@ -62,13 +62,13 @@ CREATE TABLE faculty_student(
 facultyID INT UNSIGNED NOT NULL,
 StudentID INT UNSIGNED NOT NULL,
 PRIMARY KEY (facultyID, StudentID),
-CONSTRAINT faculty_student_faculty_FK 
-	FOREIGN KEY (facultyID) 
+CONSTRAINT faculty_student_faculty_FK
+	FOREIGN KEY (facultyID)
 	REFERENCES faculty(facultyID)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE,
  CONSTRAINT faculty_student_student_FK
-	FOREIGN KEY (StudentID)    
+	FOREIGN KEY (StudentID)
 	REFERENCES student(StudentID)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE
@@ -76,28 +76,28 @@ CONSTRAINT faculty_student_faculty_FK
 
 -- Creates an abstract and adds it to the faculty_abstract table.
 DROP PROCEDURE IF EXISTS buildFacultyAbs;
-DELIMITER >:)
+DELIMITER //
 CREATE PROCEDURE buildFacultyAbs(
 	IN in_facultyID INT,
     IN in_abs_text MEDIUMTEXT
 )
 BEGIN
 	DECLARE new_abstractID INT;
-    
+
     INSERT INTO abstract (abs_text)
     VALUES (in_abs_text);
-    
+
     SELECT LAST_INSERT_ID()
     INTO new_abstractID;
 
 	INSERT INTO faculty_abstract (facultyID, abstractID)
     VALUES (in_facultyID, new_abstractID);
-END >:)
+END//
 DELIMITER ;
 
 -- For an existing abstract, adds a faculty_abstract item.
 DROP PROCEDURE IF EXISTS update_Faculty_Abs;
-DELIMITER >:)
+DELIMITER //
 CREATE PROCEDURE update_Faculty_Abs(
 	IN in_facultyID INT,
     IN in_abstractID INT
@@ -105,39 +105,39 @@ CREATE PROCEDURE update_Faculty_Abs(
 BEGIN
 	INSERT INTO faculty_abstract (facultyID, abstractID)
     VALUES (in_facultyID, in_abstractID);
-END >:)
+END//
 DELIMITER ;
 
 -- The abstract table is searched for up to three keywords, and the matching faculty members are returned.
 DROP PROCEDURE IF EXISTS Abstract_Lookup;
-DELIMITER >:)
+DELIMITER //
 CREATE PROCEDURE Abstract_Lookup(
 	IN keywordOne VARCHAR(80),
     IN keywordTwo VARCHAR(80),
     IN keywordThree VARCHAR(80)
 )
 BEGIN
-	IF keywordTwo = "" THEN
+	IF keywordTwo = '' THEN
 		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
 		FROM faculty
 		JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
 		JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
-		WHERE (abstract.abs_text LIKE CONCAT("%", keywordOne, "%"));
-	ELSEIF keywordThree = "" THEN
+		WHERE (abstract.abs_text LIKE CONCAT('%', keywordOne, '%'));
+	ELSEIF keywordThree = '' THEN
 		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
 		FROM faculty
 		JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
 		JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
-		WHERE (abstract.abs_text LIKE CONCAT("%", keywordOne, "%"))
-			OR (abstract.abs_text LIKE CONCAT("%", keywordTwo, "%"));
+		WHERE (abstract.abs_text LIKE CONCAT('%', keywordOne, '%'))
+			OR (abstract.abs_text LIKE CONCAT('%', keywordTwo, '%'));
 	ELSE
 		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
 		FROM faculty
 		JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
 		JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
-		WHERE (abstract.abs_text LIKE CONCAT("%", keywordOne, "%"))
-			OR (abstract.abs_text LIKE CONCAT("%", keywordTwo, "%"))
-			OR (abstract.abs_text LIKE CONCAT("%", keywordThree, "%"));
+		WHERE (abstract.abs_text LIKE CONCAT('%', keywordOne, '%'))
+			OR (abstract.abs_text LIKE CONCAT('%', keywordTwo, '%'))
+			OR (abstract.abs_text LIKE CONCAT('%', keywordThree, '%'));
 	END IF;
-END >:)
+END//
 DELIMITER ;
