@@ -120,6 +120,37 @@ CONSTRAINT faculty_student_faculty_FK
 	ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+
+
+
+-- Adds a keyword to a student
+DROP PROCEDURE IF EXISTS addStudentKeyword;
+DELIMITER //
+CREATE PROCEDURE addStudentKeyword(
+	IN in_studentID INT,
+	IN in_word VARCHAR(80)
+	OUT out_keywordID
+)
+BEGIN
+	DECLARE wordID INT; -- Store the ID of the keyword
+
+	-- Test if the word already exists in the table of keywords.
+	IF in_word NOT IN (SELECT keywords.word) THEN
+		-- If the word doesn't already exist, in the table, insert it
+		INSERT INTO keywords (word) VALUES (in_word);
+	END IF;
+
+	-- Get the ID of the word in the keywords table
+	SELECT keywords.KeywordID INTO wordID
+	FROM keywords
+	WHERE keywords.word LIKE in_word;
+
+	-- Insert the record
+	INSERT INTO student_keyword(StudentID, KeywordID)
+	VALUES (in_studentID, wordID);
+END//
+DELIMITER ;
+
 -- Creates an abstract and adds it to the faculty_abstract table.
 DROP PROCEDURE IF EXISTS buildFacultyAbs;
 DELIMITER //
