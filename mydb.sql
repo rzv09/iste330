@@ -21,7 +21,7 @@ CREATE TABLE faculty(
 ALTER TABLE faculty AUTO_INCREMENT = 100;
 
 DROP TABLE IF EXISTS faculty_topics;
-CREATE TABLE keywords (
+CREATE TABLE faculty_topics (
 	KeywordID INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	word VARCHAR(80) NOT NULL, -- set to 80 as the longest word in the english dictionary is only 45 characters long.
 	PRIMARY KEY (KeywordID)
@@ -84,7 +84,7 @@ CREATE TABLE student(
 ALTER TABLE student AUTO_INCREMENT = 100;
 
 DROP TABLE IF EXISTS student_topics;
-CREATE TABLE keywords (
+CREATE TABLE student_topics (
 	KeywordID INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	word VARCHAR(80) NOT NULL, -- set to 80 as the longest word in the english dictionary is only 45 characters long.
 	PRIMARY KEY (KeywordID)
@@ -165,20 +165,17 @@ CREATE PROCEDURE removeStudentKeyword(
 	p_word VARCHAR(80)
 )
 BEGIN
-	DECLARE 
-	wordID INT; -- Store the ID of the keyword
+	DECLARE wordID INT; -- Store the ID of the keyword
 	--Test if the word even exists in the keyword table.
-	IF p_word IN (student_topics.word) THEN
 		-- Get the word ID
 		SELECT student_topics.KeywordID INTO wordID
 		FROM student_topics
-		WHERE p_word LIKE word;
+		WHERE student_topics.word LIKE p_word;
 
 		-- Actually delete the record
 		DELETE FROM TABLE student_keyword
 		WHERE StudentID = p_studentID AND
 			KeywordID = wordID;
-	END IF;
 END//
 DELIMITER ;
 
@@ -193,17 +190,15 @@ BEGIN
 	DECLARE 
 	wordID INT; -- Store the ID of the keyword
 	--Test if the word even exists in the keyword table.
-	IF p_word IN (faculty_topics.word) THEN
 		-- Get the word ID
 		SELECT faculty_topics.KeywordID INTO wordID
 		FROM faculty_topics
-		WHERE p_word LIKE word;
+		WHERE faculty_topics.word LIKE p_word;
 
 		-- Actually delete the record
 		DELETE FROM TABLE faculty_keyword
 		WHERE facultyID = p_facultyID AND
 			KeywordID = wordID;
-	END IF;
 END//
 DELIMITER ;
 
