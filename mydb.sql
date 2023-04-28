@@ -20,6 +20,32 @@ CREATE TABLE faculty(
 
 ALTER TABLE faculty AUTO_INCREMENT = 100;
 
+DROP TABLE IF EXISTS faculty_topics;
+CREATE TABLE keywords (
+	KeywordID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	word VARCHAR(80) NOT NULL, -- set to 80 as the longest word in the english dictionary is only 45 characters long.
+	PRIMARY KEY (KeywordID)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS faculty_keyword;
+CREATE TABLE faculty_keyword (
+	KeywordID INT UNSIGNED NOT NULL,
+	facultyID INT UNSIGNED NOT NULL,
+	PRIMARY KEY (KeywordID, facultyID),
+	CONSTRAINT faculty_keyword_keyword_FK
+		FOREIGN KEY (KeywordID)
+		REFERENCES faculty_topics(KeywordID)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	CONSTRAINT faculty_keyword_faculty_FK
+		FOREIGN KEY (KeywordID)
+		REFERENCES faculty(facultyID)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+
+
 DROP TABLE IF EXISTS abstract;
 CREATE TABLE abstract(
 	abstractID INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -57,14 +83,12 @@ CREATE TABLE student(
 
 ALTER TABLE student AUTO_INCREMENT = 100;
 
-DROP TABLE IF EXISTS keywords;
+DROP TABLE IF EXISTS student_topics;
 CREATE TABLE keywords (
 	KeywordID INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	word VARCHAR(80) NOT NULL, -- set to 80 as the longest word in the english dictionary is only 45 characters long.
 	PRIMARY KEY (KeywordID)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
-
-
 
 DROP TABLE IF EXISTS student_keyword;
 CREATE TABLE student_keyword (
@@ -73,29 +97,12 @@ CREATE TABLE student_keyword (
 	PRIMARY KEY (KeywordID, StudentID),
 	CONSTRAINT student_keyword_keyword_FK
 		FOREIGN KEY (KeywordID)
-		REFERENCES keywords(KeywordID)
+		REFERENCES student_topics(KeywordID)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
 	CONSTRAINT student_keyword_student_FK
 		FOREIGN KEY (StudentID)
 		REFERENCES student(StudentID)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
-) ENGINE = InnoDB DEFAULT CHARSET = utf8;
-
-DROP TABLE IF EXISTS faculty_keyword;
-CREATE TABLE faculty_keyword (
-	KeywordID INT UNSIGNED NOT NULL,
-	facultyID INT UNSIGNED NOT NULL,
-	PRIMARY KEY (KeywordID, facultyID),
-	CONSTRAINT faculty_keyword_keyword_FK
-		FOREIGN KEY (KeywordID)
-		REFERENCES keywords(KeywordID)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE,
-	CONSTRAINT faculty_keyword_faculty_FK
-		FOREIGN KEY (KeywordID)
-		REFERENCES faculty(facultyID)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -134,15 +141,15 @@ BEGIN
 	DECLARE wordID INT; -- Store the ID of the keyword
 
 	-- Test if the word already exists in the table of keywords.
-	IF in_word NOT IN (SELECT keywords.word) THEN
+	IF in_word NOT IN (SELECT student_topics.word) THEN
 		-- If the word doesn't already exist, in the table, insert it
-		INSERT INTO keywords (word) VALUES (in_word);
+		INSERT INTO student_topics (word) VALUES (in_word);
 	END IF;
 
 	-- Get the ID of the word in the keywords table
-	SELECT keywords.KeywordID INTO wordID
-	FROM keywords
-	WHERE keywords.word LIKE in_word;
+	SELECT student_topics.KeywordID INTO wordID
+	FROM student_topics
+	WHERE student_topics.word LIKE in_word;
 
 	-- Insert the record
 	INSERT INTO student_keyword(StudentID, KeywordID)
@@ -161,10 +168,10 @@ BEGIN
 	DECLARE 
 	wordID INT; -- Store the ID of the keyword
 	--Test if the word even exists in the keyword table.
-	IF p_word IN (keywords.word) THEN
+	IF p_word IN (student_topics.word) THEN
 		-- Get the word ID
-		SELECT keywords.KeywordID INTO wordID
-		FROM keywords
+		SELECT student_topics.KeywordID INTO wordID
+		FROM student_topics
 		WHERE p_word LIKE word;
 
 		-- Actually delete the record
@@ -186,10 +193,10 @@ BEGIN
 	DECLARE 
 	wordID INT; -- Store the ID of the keyword
 	--Test if the word even exists in the keyword table.
-	IF p_word IN (keywords.word) THEN
+	IF p_word IN (faculty_topics.word) THEN
 		-- Get the word ID
-		SELECT keywords.KeywordID INTO wordID
-		FROM keywords
+		SELECT faculty_topics.KeywordID INTO wordID
+		FROM faculty_topics
 		WHERE p_word LIKE word;
 
 		-- Actually delete the record
@@ -213,15 +220,15 @@ BEGIN
 	DECLARE wordID INT; -- Store the ID of the keyword
 
 	-- Test if the word already exists in the table of keywords.
-	IF in_word NOT IN (SELECT keywords.word) THEN
+	IF in_word NOT IN (SELECT faculty_topics.word) THEN
 		-- If the word doesn't already exist, in the table, insert it
-		INSERT INTO keywords (word) VALUES (in_word);
+		INSERT INTO faculty_topics (word) VALUES (in_word);
 	END IF;
 
 	-- Get the ID of the word in the keywords table
-	SELECT keywords.KeywordID INTO wordID
-	FROM keywords
-	WHERE keywords.word LIKE in_word;
+	SELECT faculty_topics.KeywordID INTO wordID
+	FROM faculty_topics
+	WHERE faculty_topics.word LIKE in_word;
 
 	-- Insert the record
 	INSERT INTO faculty_keyword(facultyID, KeywordID)
@@ -313,25 +320,25 @@ BEGIN
 		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
 		FROM faculty
 		JOIN faculty_keyword USING(facultyID)
-		JOIN keywords ON faculty_keyword.KeywordID = keywords.KeywordID
-		WHERE keywords.word LIKE ('%' || keywordOne || '%');
+		JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
+		WHERE faculty_topics.word LIKE ('%' || keywordOne || '%');
 	-- If only two keywords are provided, ignore keywordThree
 	ELSEIF keywordThree = "" THEN
 		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
 		FROM faculty
 		JOIN faculty_keyword USING(facultyID)
-		JOIN keywords ON faculty_keyword.KeywordID = keywords.KeywordID
-		WHERE keywords.word LIKE ('%' || keywordOne || '%')
-			OR keywords.word LIKE ('%' || keywordTwo || '%');
+		JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
+		WHERE faculty_topics.word LIKE ('%' || keywordOne || '%')
+			OR faculty_topics.word LIKE ('%' || keywordTwo || '%');
 	-- If three keywords are provided.
 	ELSE 
 		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
 		FROM faculty
 		JOIN faculty_keyword USING(facultyID)
-		JOIN keywords ON faculty_keyword.KeywordID = keywords.KeywordID
-		WHERE keywords.word LIKE ('%' || keywordOne || '%')
-			OR keywords.word LIKE ('%' || keywordTwo || '%')
-			OR keywords.word LIKE ('%' || keywordThree || '%');
+		JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
+		WHERE faculty_topics.word LIKE ('%' || keywordOne || '%')
+			OR faculty_topics.word LIKE ('%' || keywordTwo || '%')
+			OR faculty_topics.word LIKE ('%' || keywordThree || '%');
 	END IF;
 END //
 DELIMITER ;
@@ -352,25 +359,25 @@ BEGIN
 		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
 		FROM student
 		JOIN student_keyword USING(StudentID)
-		JOIN keywords ON student_keyword.KeywordID = keywords.KeywordID
-		WHERE keywords.word LIKE ('%' || keywordOne || '%');
+		JOIN student_topics ON student_keyword.KeywordID = student_topics.KeywordID
+		WHERE student_topics.word LIKE ('%' || keywordOne || '%');
 	-- If only two keywords are provided, ignore keywordThree
 	ELSEIF keywordThree = "" THEN
 		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
 		FROM student
 		JOIN student_keyword USING(StudentID)
-		JOIN keywords ON student_keyword.KeywordID = keywords.KeywordID
-		WHERE keywords.word LIKE ('%' || keywordOne || '%')
-			OR keywords.word LIKE ('%' || keywordTwo || '%');
+		JOIN student_topics ON student_keyword.KeywordID = student_topics.KeywordID
+		WHERE student_topics.word LIKE ('%' || keywordOne || '%')
+			OR student_topics.word LIKE ('%' || keywordTwo || '%');
 	-- If three keywords are provided.
 	ELSE 
 		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
 		FROM student
 		JOIN student_keyword USING(StudentID)
-		JOIN keywords ON student_keyword.KeywordID = keywords.KeywordID
-		WHERE keywords.word LIKE ('%' || keywordOne || '%')
-			OR keywords.word LIKE ('%' || keywordTwo || '%')
-			OR keywords.word LIKE ('%' || keywordThree || '%');
+		JOIN student_topics ON student_keyword.KeywordID = student_topics.KeywordID
+		WHERE student_topics.word LIKE ('%' || keywordOne || '%')
+			OR student_topics.word LIKE ('%' || keywordTwo || '%')
+			OR student_topics.word LIKE ('%' || keywordThree || '%');
 	END IF;
 END //
 DELIMITER ;
