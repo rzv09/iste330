@@ -57,6 +57,52 @@ CREATE TABLE student(
 
 ALTER TABLE student AUTO_INCREMENT = 100;
 
+DROP TABLE IF EXISTS keywords;
+CREATE TABLE keywords (
+	KeywordID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	word VARCHAR(60) NOT NULL, -- set to 60 as the longest word in the english dictionary is only 45 characters long.
+	PRIMARY KEY (KeywordID)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+
+
+DROP TABLE IF EXISTS student_keyword;
+CREATE TABLE student_keyword (
+	KeywordID INT UNSIGNED NOT NULL,
+	StudentID INT UNSIGNED NOT NULL,
+	PRIMARY KEY (KeywordID, StudentID),
+	CONSTRAINT student_keyword_keyword_FK
+		FOREIGN KEY (KeywordID)
+		REFERENCES keywords(KeywordID)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	CONSTRAINT student_keyword_student_FK
+		FOREIGN KEY (StudentID)
+		REFERENCES student(StudentID)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS faculty_keyword;
+CREATE TABLE faculty_keyword (
+	KeywordID INT UNSIGNED NOT NULL,
+	facultyID INT UNSIGNED NOT NULL,
+	PRIMARY KEY (KeywordID, facultyID),
+	CONSTRAINT faculty_keyword_keyword_FK
+		FOREIGN KEY (KeywordID)
+		REFERENCES keywords(KeywordID)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	CONSTRAINT faculty_keyword_faculty_FK
+		FOREIGN KEY (KeywordID)
+		REFERENCES faculty(facultyID)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+
+
+
 DROP TABLE IF EXISTS faculty_student;
 CREATE TABLE faculty_student(
 facultyID INT UNSIGNED NOT NULL,
