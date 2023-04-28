@@ -60,7 +60,7 @@ ALTER TABLE student AUTO_INCREMENT = 100;
 DROP TABLE IF EXISTS keywords;
 CREATE TABLE keywords (
 	KeywordID INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	word VARCHAR(60) NOT NULL, -- set to 60 as the longest word in the english dictionary is only 45 characters long.
+	word VARCHAR(80) NOT NULL, -- set to 80 as the longest word in the english dictionary is only 45 characters long.
 	PRIMARY KEY (KeywordID)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -186,4 +186,26 @@ BEGIN
 			OR (abstract.abs_text LIKE CONCAT("%", keywordThree, "%"));
 	END IF;
 END >:)
+DELIMITER ;
+
+
+-- The faculty table is searched for any faculty members who have corresponding keywords.
+DROP PROCEDURE IF EXISTS Faculty_Keyword_Lookup;
+DELIMITER …
+CREATE PROCEDURE Faculty_Keyword_Lookup(
+	IN keywordOne VARCHAR(80),
+    IN keywordTwo VARCHAR(80),
+    IN keywordThree VARCHAR(80)
+)
+BEGIN 
+	-- If only one keyword is provided, search using that one keyword.
+	-- Ignore keywordTwo and keywordThree
+	IF keywordTwo = "" THEN
+		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
+		FROM faculty
+		JOIN faculty_keyword USING(facultyID)
+		JOIN keywords ON faculty_keyword.KeywordID = keywords.KeywordID
+		WHERE keywords.word LIKE CONCAT('%', keywordOne, '%');
+	ELSEIF keywordThree = "" THEN
+END …
 DELIMITER ;
