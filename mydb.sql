@@ -166,14 +166,14 @@ CREATE PROCEDURE removeStudentKeyword(
 )
 BEGIN
 	DECLARE wordID INT; -- Store the ID of the keyword
-	--Test if the word even exists in the keyword table.
+	-- Test if the word even exists in the keyword table.
 		-- Get the word ID
 		SELECT student_topics.KeywordID INTO wordID
 		FROM student_topics
 		WHERE student_topics.word LIKE p_word;
 
 		-- Actually delete the record
-		DELETE FROM TABLE student_keyword
+		DELETE FROM student_keyword
 		WHERE StudentID = p_studentID AND
 			KeywordID = wordID;
 END//
@@ -187,16 +187,16 @@ CREATE PROCEDURE removeFacultyKeyword(
 	p_word VARCHAR(80)
 )
 BEGIN
-	DECLARE 
+	DECLARE
 	wordID INT; -- Store the ID of the keyword
-	--Test if the word even exists in the keyword table.
+	-- Test if the word even exists in the keyword table.
 		-- Get the word ID
 		SELECT faculty_topics.KeywordID INTO wordID
 		FROM faculty_topics
 		WHERE faculty_topics.word LIKE p_word;
 
 		-- Actually delete the record
-		DELETE FROM TABLE faculty_keyword
+		DELETE FROM faculty_keyword
 		WHERE facultyID = p_facultyID AND
 			KeywordID = wordID;
 END//
@@ -265,41 +265,6 @@ BEGIN
 END//
 DELIMITER ;
 
--- The abstract table is searched for up to three keywords, and the matching faculty members are returned.
-DROP PROCEDURE IF EXISTS Abstract_Lookup;
-DELIMITER //
-CREATE PROCEDURE Abstract_Lookup(
-	IN keywordOne VARCHAR(80),
-    IN keywordTwo VARCHAR(80),
-    IN keywordThree VARCHAR(80)
-)
-BEGIN
-	IF keywordTwo = '' THEN
-		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
-		FROM faculty
-		JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
-		JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
-		WHERE (abstract.abs_text LIKE CONCAT('%', keywordOne, '%'));
-	ELSEIF keywordThree = '' THEN
-		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
-		FROM faculty
-		JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
-		JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
-		WHERE (abstract.abs_text LIKE CONCAT('%', keywordOne, '%'))
-			OR (abstract.abs_text LIKE CONCAT('%', keywordTwo, '%'));
-	ELSE
-		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
-		FROM faculty
-		JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
-		JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
-		WHERE (abstract.abs_text LIKE CONCAT('%', keywordOne, '%'))
-			OR (abstract.abs_text LIKE CONCAT('%', keywordTwo, '%'))
-			OR (abstract.abs_text LIKE CONCAT('%', keywordThree, '%'));
-	END IF;
-END//
-DELIMITER ;
-
-
 -- The faculty table is searched for any faculty members who have corresponding keywords.
 DROP PROCEDURE IF EXISTS Faculty_Keyword_Lookup;
 DELIMITER //
@@ -308,32 +273,44 @@ CREATE PROCEDURE Faculty_Keyword_Lookup(
     IN keywordTwo VARCHAR(80),
     IN keywordThree VARCHAR(80)
 )
-BEGIN 
+BEGIN
 	-- If only one keyword is provided, search using that one keyword.
 	-- Ignore keywordTwo and keywordThree
-	IF keywordTwo = "" THEN
+	IF keywordTwo = '' THEN
 		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
 		FROM faculty
 		JOIN faculty_keyword USING(facultyID)
 		JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
-		WHERE faculty_topics.word LIKE ('%' || keywordOne || '%');
-	-- If only two keywords are provided, ignore keywordThree
-	ELSEIF keywordThree = "" THEN
-		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
-		FROM faculty
-		JOIN faculty_keyword USING(facultyID)
-		JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
+        JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
+        JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
 		WHERE faculty_topics.word LIKE ('%' || keywordOne || '%')
-			OR faculty_topics.word LIKE ('%' || keywordTwo || '%');
-	-- If three keywords are provided.
-	ELSE 
-		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
-		FROM faculty
-		JOIN faculty_keyword USING(facultyID)
-		JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
+		    OR (abstract.abs_text LIKE ('%' || keywordOne ||'%'));
+	-- If only two keywords are provided, ignore keywordThree
+	ELSEIF keywordThree = '' THEN
+        SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
+        FROM faculty
+                 JOIN faculty_keyword USING(facultyID)
+                 JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
+                 JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
+                 JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
 		WHERE faculty_topics.word LIKE ('%' || keywordOne || '%')
 			OR faculty_topics.word LIKE ('%' || keywordTwo || '%')
-			OR faculty_topics.word LIKE ('%' || keywordThree || '%');
+            OR (abstract.abs_text LIKE ('%' || keywordOne || '%'))
+            OR (abstract.abs_text LIKE ('%' || keywordTwo || '%'));
+	-- If three keywords are provided.
+	ELSE
+        SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
+        FROM faculty
+                 JOIN faculty_keyword USING(facultyID)
+                 JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
+                 JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
+                 JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
+        WHERE faculty_topics.word LIKE ('%' || keywordOne || '%')
+           OR faculty_topics.word LIKE ('%' || keywordTwo || '%')
+           OR faculty_topics.word LIKE ('%' || keywordThree || '%')
+           OR (abstract.abs_text LIKE ('%' || keywordOne || '%'))
+           OR (abstract.abs_text LIKE ('%' || keywordTwo || '%'))
+           OR (abstract.abs_text LIKE ('%' || keywordThree || '%'));
 	END IF;
 END //
 DELIMITER ;
@@ -347,17 +324,17 @@ CREATE PROCEDURE Student_Keyword_Lookup(
     IN keywordTwo VARCHAR(80),
     IN keywordThree VARCHAR(80)
 )
-BEGIN 
+BEGIN
 	-- If only one keyword is provided, search using that one keyword.
 	-- Ignore keywordTwo and keywordThree
-	IF keywordTwo = "" THEN
+	IF keywordTwo = '' THEN
 		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
 		FROM student
 		JOIN student_keyword USING(StudentID)
 		JOIN student_topics ON student_keyword.KeywordID = student_topics.KeywordID
 		WHERE student_topics.word LIKE ('%' || keywordOne || '%');
 	-- If only two keywords are provided, ignore keywordThree
-	ELSEIF keywordThree = "" THEN
+	ELSEIF keywordThree = '' THEN
 		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
 		FROM student
 		JOIN student_keyword USING(StudentID)
@@ -365,7 +342,7 @@ BEGIN
 		WHERE student_topics.word LIKE ('%' || keywordOne || '%')
 			OR student_topics.word LIKE ('%' || keywordTwo || '%');
 	-- If three keywords are provided.
-	ELSE 
+	ELSE
 		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
 		FROM student
 		JOIN student_keyword USING(StudentID)

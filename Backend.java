@@ -15,13 +15,13 @@ public class Backend {
    private CallableStatement cstmt;
 	private ResultSet rs;
 	private String sql;
-   
+
    // JDBC Type 4 Driver
 	final String DEFAULT_DRIVER = "com.mysql.cj.jdbc.Driver";
 
 	// Define Data Source
 	final String url = "jdbc:mysql://localhost/CollegeConnection";
-   
+
    /*
     * Creates the database connection
     * Returns true if the connection was successful
@@ -37,9 +37,9 @@ public class Backend {
          return false;
 		} // end of try/catch
 
-		// create a connection  
+		// create a connection
 		boolean connected = true;
-      
+
       String user = username.strip();
       String pass = password.strip();
 
@@ -65,8 +65,8 @@ public class Backend {
          return false;
 		} //end of if/else
 	} // end of connect
-   
-   /* 
+
+   /*
     * Closes the database connection
     */
    public void close() {
@@ -85,10 +85,10 @@ public class Backend {
 		System.out.println("\nEnd of program\nTerminated at " + now);
 		System.exit(0);
 	} // end of close
-   
+
    public int addFaculty(String fName, String lName, String email, int buildingNumber, int officeNumber) {
       try {
-         
+
          if(buildingNumber == 0 && officeNumber == 0) {
             pstmt = conn.prepareStatement("INSERT INTO faculty (lastName, firstName, email) VALUES (?, ?, ?)");
             pstmt.setString(1, lName.strip());
@@ -113,11 +113,11 @@ public class Backend {
             pstmt.setString(3, email.strip());
             pstmt.setInt(4, buildingNumber);
             pstmt.setInt(5, officeNumber);
-         } 
-         
+         }
+
          int rows = pstmt.executeUpdate();
          System.out.println(rows + " rows updated.");
-         
+
          if(rows > 0){
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
@@ -132,14 +132,14 @@ public class Backend {
          return 0;
       }
    }
-   
+
    public boolean validateFaculty(int id) {
       try {
          pstmt = conn.prepareStatement("SELECT facultyID FROM faculty WHERE facultyID = ?");
          pstmt.setInt(1, id);
-         
+
          rs = pstmt.executeQuery();
-         
+
          rs.next();
          if(rs.getInt("facultyID") >= 100) {
             return true;
@@ -150,9 +150,9 @@ public class Backend {
          System.out.println("Error occured while attempting to select record");
          se.printStackTrace();
          return false;
-      } 
-   } 
-   
+      }
+   }
+
    public void addRecord(int facultyID, String abstractText) {
       try {
          cstmt = conn.prepareCall("{CALL buildFacultyAbs(?, ?)}");
@@ -162,19 +162,19 @@ public class Backend {
       } catch (SQLException se) {
          System.out.println("Error occured while attempting to insert record");
          se.printStackTrace();
-      } 
-   } 
-   
+      }
+   }
+
    public int addStudent(String fName, String lName, String email) {
       try {
          pstmt = conn.prepareStatement("INSERT INTO student (lastName, firstName, email) VALUES (?, ?, ?)");
          pstmt.setString(1, lName.strip());
          pstmt.setString(2, fName.strip());
          pstmt.setString(3, email.strip());
-         
+
          int rows = pstmt.executeUpdate();
          System.out.println(rows + " rows updated.");
-         
+
          if(rows > 0){
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
@@ -182,57 +182,72 @@ public class Backend {
             return rs.getInt("LAST_INSERT_ID()");
          } else {
             return 0;
-         } 
+         }
       } catch(SQLException se) {
          System.out.println("Error occured while attempting to insert record");
          se.printStackTrace();
          return 0;
-      } 
+      }
    }
-   
+
    public boolean validateStudent(int id) {
       try {
          pstmt = conn.prepareStatement("SELECT studentID FROM student WHERE studentID = ?");
          pstmt.setInt(1, id);
-         
+
          rs = pstmt.executeQuery();
-         
+
          rs.next();
          if(rs.getInt("studentID") >= 100) {
             return true;
          } else {
             return false;
-         } 
+         }
       } catch(SQLException se) {
          System.out.println("Error occured while attempting to select record");
          se.printStackTrace();
          return false;
       }
-   } 
-   
-   public void searchKeywords(String keywordOne, String keywordTwo, String keywordThree) {
+   }
+
+   public void searchKeywords(String type, String keywordOne, String keywordTwo, String keywordThree) {
       ResultSet rs;
       try {
-         cstmt = conn.prepareCall("{CALL Abstract_Lookup(?, ?, ?)}");
+         switch (type) {
+            case "student" -> cstmt = conn.prepareCall("{CALL Student_Keyword_Lookup(?, ?, ?)}");
+            case "faculty" -> cstmt = conn.prepareCall("{CALL Faculty_Keyword_Lookup(?, ?, ?)}");
+         }
          cstmt.setString(1, keywordOne);
          cstmt.setString(2, keywordTwo);
          cstmt.setString(3, keywordThree);
-         
+
          rs = cstmt.executeQuery();
-         
-         while(rs.next()) {
-            System.out.println("\nMatching Faculty Member:\nLast Name: " +
-               rs.getString("lastName") + " | " + "First Name: " +
-               rs.getString("firstName") + " | " + "Email Address: " +
-               rs.getString("email") + " | " + "Building Number: " +
-               rs.getString("buildingNumber") + " | " + "Office Number: " +
-               rs.getString("officeNumber"));
+
+         switch(type){
+            case "student":
+               while(rs.next()) {
+                  System.out.println("\nMatching Student:\nLast Name: " +
+                          rs.getString("lastName") + " | " + "First Name: " +
+                          rs.getString("firstName") + " | " + "Email Address: " +
+                          rs.getString("email"));
+               }
+               break;
+            case "faculty":
+               while(rs.next()) {
+                  System.out.println("\nMatching Faculty Member:\nLast Name: " +
+                          rs.getString("lastName") + " | " + "First Name: " +
+                          rs.getString("firstName") + " | " + "Email Address: " +
+                          rs.getString("email") + " | " + "Building Number: " +
+                          rs.getString("buildingNumber") + " | " + "Office Number: " +
+                          rs.getString("officeNumber"));
+               }
+               break;
          }
       } catch (SQLException se) {
          System.out.println("Error occured while attempting to search keywords");
          se.printStackTrace();
       }
-      
-     
+
+
    }
-} 
+}
