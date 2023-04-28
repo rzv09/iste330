@@ -161,7 +161,7 @@ BEGIN
 	DECLARE 
 	wordID INT; -- Store the ID of the keyword
 	--Test if the word even exists in the keyword table.
-	IF p_word EXISTS IN (keywords.word) THEN
+	IF p_word IN (keywords.word) THEN
 		-- Get the word ID
 		SELECT keywords.KeywordID INTO wordID
 		FROM keywords
@@ -186,7 +186,7 @@ BEGIN
 	DECLARE 
 	wordID INT; -- Store the ID of the keyword
 	--Test if the word even exists in the keyword table.
-	IF p_word EXISTS IN (keywords.word) THEN
+	IF p_word IN (keywords.word) THEN
 		-- Get the word ID
 		SELECT keywords.KeywordID INTO wordID
 		FROM keywords
