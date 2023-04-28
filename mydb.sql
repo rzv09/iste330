@@ -150,6 +150,56 @@ BEGIN
 END//
 DELIMITER ;
 
+-- Removes a keyword from a student
+DROP PROCEDURE IF EXISTS removeStudentKeyword;
+DELIMITER //
+CREATE PROCEDURE removeStudentKeyword(
+	p_studentID INT,
+	p_word VARCHAR(80)
+)
+BEGIN
+	DECLARE 
+	wordID INT; -- Store the ID of the keyword
+	--Test if the word even exists in the keyword table.
+	IF p_word EXISTS IN (keywords.word) THEN
+		-- Get the word ID
+		SELECT keywords.KeywordID INTO wordID
+		FROM keywords
+		WHERE p_word LIKE word;
+
+		-- Actually delete the record
+		DELETE FROM TABLE student_keyword
+		WHERE StudentID = p_studentID AND
+			KeywordID = wordID;
+	END IF;
+END//
+DELIMITER ;
+
+-- Removes a keyword from a faculty member
+DROP PROCEDURE IF EXISTS removeFacultyKeyword;
+DELIMITER //
+CREATE PROCEDURE removeFacultyKeyword(
+	p_facultyID INT,
+	p_word VARCHAR(80)
+)
+BEGIN
+	DECLARE 
+	wordID INT; -- Store the ID of the keyword
+	--Test if the word even exists in the keyword table.
+	IF p_word EXISTS IN (keywords.word) THEN
+		-- Get the word ID
+		SELECT keywords.KeywordID INTO wordID
+		FROM keywords
+		WHERE p_word LIKE word;
+
+		-- Actually delete the record
+		DELETE FROM TABLE faculty_keyword
+		WHERE facultyID = p_facultyID AND
+			KeywordID = wordID;
+	END IF;
+END//
+DELIMITER ;
+
 
 
 -- Adds a keyword to a faculty member
