@@ -190,7 +190,6 @@ DELIMITER ;
 
 
 -- The faculty table is searched for any faculty members who have corresponding keywords.
--- The faculty table is searched for any faculty members who have corresponding keywords.
 DROP PROCEDURE IF EXISTS Faculty_Keyword_Lookup;
 DELIMITER //
 CREATE PROCEDURE Faculty_Keyword_Lookup(
@@ -221,6 +220,45 @@ BEGIN
 		FROM faculty
 		JOIN faculty_keyword USING(facultyID)
 		JOIN keywords ON faculty_keyword.KeywordID = keywords.KeywordID
+		WHERE keywords.word LIKE ('%' || keywordOne || '%')
+			OR keywords.word LIKE ('%' || keywordTwo || '%')
+			OR keywords.word LIKE ('%' || keywordThree || '%');
+	END IF;
+END //
+DELIMITER ;
+
+
+-- The student table is searched for any students who have corresponding keywords.
+DROP PROCEDURE IF EXISTS Student_Keyword_Lookup;
+DELIMITER //
+CREATE PROCEDURE Student_Keyword_Lookup(
+	IN keywordOne VARCHAR(80),
+    IN keywordTwo VARCHAR(80),
+    IN keywordThree VARCHAR(80)
+)
+BEGIN 
+	-- If only one keyword is provided, search using that one keyword.
+	-- Ignore keywordTwo and keywordThree
+	IF keywordTwo = "" THEN
+		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
+		FROM student
+		JOIN student_keyword USING(StudentID)
+		JOIN keywords ON student_keyword.KeywordID = keywords.KeywordID
+		WHERE keywords.word LIKE ('%' || keywordOne || '%');
+	-- If only two keywords are provided, ignore keywordThree
+	ELSEIF keywordThree = "" THEN
+		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
+		FROM student
+		JOIN student_keyword USING(StudentID)
+		JOIN keywords ON student_keyword.KeywordID = keywords.KeywordID
+		WHERE keywords.word LIKE ('%' || keywordOne || '%')
+			OR keywords.word LIKE ('%' || keywordTwo || '%');
+	-- If three keywords are provided.
+	ELSE 
+		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
+		FROM student
+		JOIN student_keyword USING(StudentID)
+		JOIN keywords ON student_keyword.KeywordID = keywords.KeywordID
 		WHERE keywords.word LIKE ('%' || keywordOne || '%')
 			OR keywords.word LIKE ('%' || keywordTwo || '%')
 			OR keywords.word LIKE ('%' || keywordThree || '%');
