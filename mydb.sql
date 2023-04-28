@@ -190,6 +190,7 @@ DELIMITER ;
 
 
 -- The faculty table is searched for any faculty members who have corresponding keywords.
+-- The faculty table is searched for any faculty members who have corresponding keywords.
 DROP PROCEDURE IF EXISTS Faculty_Keyword_Lookup;
 DELIMITER //
 CREATE PROCEDURE Faculty_Keyword_Lookup(
@@ -197,16 +198,32 @@ CREATE PROCEDURE Faculty_Keyword_Lookup(
     IN keywordTwo VARCHAR(80),
     IN keywordThree VARCHAR(80)
 )
-BEGIN
+BEGIN 
 	-- If only one keyword is provided, search using that one keyword.
 	-- Ignore keywordTwo and keywordThree
-	IF keywordTwo = '' THEN
+	IF keywordTwo = "" THEN
 		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
 		FROM faculty
 		JOIN faculty_keyword USING(facultyID)
 		JOIN keywords ON faculty_keyword.KeywordID = keywords.KeywordID
-		WHERE keywords.word LIKE CONCAT('%', keywordOne, '%');
-	ELSEIF keywordThree = '' THEN
+		WHERE keywords.word LIKE ('%' || keywordOne || '%');
+	-- If only two keywords are provided, ignore keywordThree
+	ELSEIF keywordThree = "" THEN
+		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
+		FROM faculty
+		JOIN faculty_keyword USING(facultyID)
+		JOIN keywords ON faculty_keyword.KeywordID = keywords.KeywordID
+		WHERE keywords.word LIKE ('%' || keywordOne || '%')
+			OR keywords.word LIKE ('%' || keywordTwo || '%');
+	-- If three keywords are provided.
+	ELSE 
+		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
+		FROM faculty
+		JOIN faculty_keyword USING(facultyID)
+		JOIN keywords ON faculty_keyword.KeywordID = keywords.KeywordID
+		WHERE keywords.word LIKE ('%' || keywordOne || '%')
+			OR keywords.word LIKE ('%' || keywordTwo || '%')
+			OR keywords.word LIKE ('%' || keywordThree || '%');
 	END IF;
-END//
+END //
 DELIMITER ;
