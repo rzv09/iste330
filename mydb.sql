@@ -362,59 +362,56 @@ DELIMITER ;
 -- populate database
 -- faculty
 INSERT INTO faculty (firstName, lastName, email, buildingNumber, officeNumber)
-<<<<<<< HEAD
 VALUES ('Brom', 'Holcombson', 'Ironscale@varden.org', 5, 7871),
        ('Iron', 'Galbatorix', 'Firstforsworn@broddring.net', 5, 0133),
        ('Oromis', 'Thrándurin', 'Emosage@eldunari.net', 5, 7200),
-       ('Angela', 'Uluthrek', 'madwomanwizened@varden.org', 5, 0022);
-=======
-VALUES
-('Brom', 'Holcombson','Ironscale@varden.org', 5, 7871),
-('Iron', 'Galbatorix','Firstforsworn@broddring.net',5, 0133),
-('Oromis', 'Thrándurin', 'Emosage@eldunari.net', 5, 7200),
-('Angela', 'Uluthrek', 'madwomanwizened@varden.org', 5, 0022),
-('Annalise', 'Cainhurst', 'hercorruptmajesty@vileblood.edu', 4, 4200),
-('Martin', 'Logarius', 'grandexecutioner@sanctum.edu', 4, 2560),
-('Florence', 'Gehrman', 'firsthunter@workshop.edu', 4, 1280),
-('Percival', 'Willem', 'headprovost@byrgenwerth.edu', 4, 2545),
-('Randal', 'Carter', 'professorunspeakable@miskatonic.edu', 10, 1920),
-('Harley', 'Warren', 'barrowsleeper@arkham.edu', 10, 1000);
->>>>>>> 228350c (The inserts to prebuild the database have been completed.)
+       ('Angela', 'Uluthrek', 'madwomanwizened@varden.org', 5, 0022),
+       ('Annalise', 'Cainhurst', 'hercorruptmajesty@vileblood.edu', 4, 4200),
+       ('Martin', 'Logarius', 'grandexecutioner@sanctum.edu', 4, 2560),
+       ('Florence', 'Gehrman', 'firsthunter@workshop.edu', 4, 1280),
+       ('Percival', 'Willem', 'headprovost@byrgenwerth.edu', 4, 2545),
+       ('Randal', 'Carter', 'professorunspeakable@miskatonic.edu', 10, 1920),
+       ('Harley', 'Warren', 'barrowsleeper@arkham.edu', 10, 1000);
 
 -- Holcombson
 CALL addFacultyKeyword(100, 'dracology');
 CALL addFacultyKeyword(100, 'fencing');
 CALL addFacultyKeyword(100, 'mysticism');
 CALL addFacultyKeyword(100, 'history');
-CALL buildFacultyAbs(100, 'Keep in mind that many people have died for their beliefs; it’s actually quite common. The real courage is in living and suffering for what you believe.');
+CALL buildFacultyAbs(100,
+                     'Keep in mind that many people have died for their beliefs; it’s actually quite common. The real courage is in living and suffering for what you believe.');
 
 -- Galbatorix
 CALL addFacultyKeyword(101, 'dracology');
 CALL addFacultyKeyword(101, 'dark arts');
 CALL addFacultyKeyword(101, 'mysticism');
 CALL addFacultyKeyword(101, 'chemistry');
-CALL buildFacultyAbs(101, 'To whom is not the issue. When the Varden learn that the legend is real, they will be encouraged to challenge me. And I am not interested in being challenged.');
+CALL buildFacultyAbs(101,
+                     'To whom is not the issue. When the Varden learn that the legend is real, they will be encouraged to challenge me. And I am not interested in being challenged.');
 
 -- Thrándurin
 CALL addFacultyKeyword(102, 'dracology');
 CALL addFacultyKeyword(102, 'fencing');
 CALL addFacultyKeyword(102, 'mysticism');
 CALL addFacultyKeyword(102, 'history');
-CALL buildFacultyAbs(102, 'History provides us with numerous examples of people who were convinced that they were doing the right thing and committed terrible crimes because of it.');
+CALL buildFacultyAbs(102,
+                     'History provides us with numerous examples of people who were convinced that they were doing the right thing and committed terrible crimes because of it.');
 
 -- Uluthrek
 CALL addFacultyKeyword(103, 'dracology');
 CALL addFacultyKeyword(103, 'mysticism');
 CALL addFacultyKeyword(103, 'witchcraft');
 CALL addFacultyKeyword(103, 'politics');
-CALL buildFacultyAbs(103, 'He’s acting as foolish as a kitten . . . but then, everyone’s entitled to a little foolishness once in a while.');
+CALL buildFacultyAbs(103,
+                     'He’s acting as foolish as a kitten . . . but then, everyone’s entitled to a little foolishness once in a while.');
 
 -- Cainhurst
 CALL addFacultyKeyword(104, 'dark arts');
 CALL addFacultyKeyword(104, 'politics');
 CALL addFacultyKeyword(104, 'witchcraft');
 CALL addFacultyKeyword(104, 'epidemiology');
-CALL buildFacultyAbs(104, 'Very well. Drink deep of Our blood. Feel the spreading corruption burn. Now, thou’rt too a Vileblood. We two, the very last on this earth. We await thy return. For the honor of Cainhurst.');
+CALL buildFacultyAbs(104,
+                     'Very well. Drink deep of Our blood. Feel the spreading corruption burn. Now, thou’rt too a Vileblood. We two, the very last on this earth. We await thy return. For the honor of Cainhurst.');
 
 -- Logarius
 CALL addFacultyKeyword(105, 'alchemy');
@@ -430,7 +427,8 @@ CALL addFacultyKeyword(106, 'witchcraft');
 CALL addFacultyKeyword(106, 'fencing');
 CALL addFacultyKeyword(106, 'epidemiology');
 CALL addFacultyKeyword(106, 'psychology');
-CALL buildFacultyAbs(106, 'Dear, oh dear. What was it? The Hunt? The Blood? Or the horrible dream? Oh, it does not matter... It always comes down to the Hunter''s helper to clean up after these sort of messes. Tonight, Gehrman joins the hunt...');
+CALL buildFacultyAbs(106,
+                     'Dear, oh dear. What was it? The Hunt? The Blood? Or the horrible dream? Oh, it does not matter... It always comes down to the Hunter''s helper to clean up after these sort of messes. Tonight, Gehrman joins the hunt...');
 
 -- Willem
 CALL addFacultyKeyword(107, 'history');
@@ -516,22 +514,16 @@ Or wear a face where faces should be found!');
 
 
 INSERT INTO student (firstName, lastName, email)
-<<<<<<< HEAD
 VALUES ('Eragon', 'Bromsson', 'brisingr@varden.org'),
-       ('Murtagh', 'Morzansson', 'kingkiller20@broddring.net');
-=======
-VALUES
-('Eragon', 'Bromsson', 'brisingr@varden.org'),
-('Murtagh', 'Morzansson', 'kingkiller20@broddring.net'),
-('Saphira', 'Bjartskular', 'brightscale@varden.org'),
-('Orik', 'Dûrgrimst Ingeitum', 'volundr@farthendur.com'),
-('Eileen', 'Branwen', 'bloodycrow@workshop.edu'),
-('Djura', 'Kegger', 'ashenhunter@powderkeg.edu'),
-('Alfred', 'Wheeler', 'wheeldisciple@healingchurch.edu'),
-('Ebrietas', 'Cosm', 'cosmogal@oeden.org'),
-('Victor', 'Frankenstein', 'shellshocker@victoria.net'),
-('Mina', 'Harker', 'garlicstake@helsing.net');
->>>>>>> 228350c (The inserts to prebuild the database have been completed.)
+       ('Murtagh', 'Morzansson', 'kingkiller20@broddring.net'),
+       ('Saphira', 'Bjartskular', 'brightscale@varden.org'),
+       ('Orik', 'Dûrgrimst Ingeitum', 'volundr@farthendur.com'),
+       ('Eileen', 'Branwen', 'bloodycrow@workshop.edu'),
+       ('Djura', 'Kegger', 'ashenhunter@powderkeg.edu'),
+       ('Alfred', 'Wheeler', 'wheeldisciple@healingchurch.edu'),
+       ('Ebrietas', 'Cosm', 'cosmogal@oeden.org'),
+       ('Victor', 'Frankenstein', 'shellshocker@victoria.net'),
+       ('Mina', 'Harker', 'garlicstake@helsing.net');
 
 -- Eragon
 CALL addStudentKeyword(100, 'dracology');
