@@ -38,7 +38,7 @@ CREATE TABLE faculty_keyword (
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
 	CONSTRAINT faculty_keyword_faculty_FK
-		FOREIGN KEY (KeywordID)
+		FOREIGN KEY (facultyID)
 		REFERENCES faculty(facultyID)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
@@ -141,7 +141,7 @@ BEGIN
 	DECLARE wordID INT; -- Store the ID of the keyword
 
 	-- Test if the word already exists in the table of keywords.
-	IF in_word NOT IN (SELECT student_topics.word) THEN
+	IF in_word NOT IN (SELECT word FROM student_topics) THEN
 		-- If the word doesn't already exist, in the table, insert it
 		INSERT INTO student_topics (word) VALUES (in_word);
 	END IF;
@@ -215,7 +215,7 @@ BEGIN
 	DECLARE wordID INT; -- Store the ID of the keyword
 
 	-- Test if the word already exists in the table of keywords.
-	IF in_word NOT IN (SELECT faculty_topics.word) THEN
+	IF in_word NOT IN (SELECT word FROM faculty_topics) THEN
 		-- If the word doesn't already exist, in the table, insert it
 		INSERT INTO faculty_topics (word) VALUES (in_word);
 	END IF;
@@ -293,8 +293,8 @@ BEGIN
 		JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
 		WHERE faculty_topics.word LIKE ('%' || keywordOne || '%')
 			OR faculty_topics.word LIKE ('%' || keywordTwo || '%')
-            OR (abstract.abs_text LIKE ('%' || keywordOne || '%'))
-            OR (abstract.abs_text LIKE ('%' || keywordTwo || '%'));
+            OR abstract.abs_text LIKE ('%' || keywordOne || '%')
+            OR abstract.abs_text LIKE ('%' || keywordTwo || '%');
 	-- If three keywords are provided.
 	ELSE
         SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
