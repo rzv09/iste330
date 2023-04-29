@@ -86,6 +86,15 @@ public class Backend {
 		System.exit(0);
 	} // end of close
 
+   /**
+    * Adds a faculty member.
+    * @param fName
+    * @param lName
+    * @param email
+    * @param buildingNumber
+    * @param officeNumber
+    * @return int - the id of the faculty member added. Returns 0 if the method failed.
+    */
    public int addFaculty(String fName, String lName, String email, int buildingNumber, int officeNumber) {
       try {
 
@@ -133,6 +142,12 @@ public class Backend {
       }
    }
 
+   /**
+    * Queries information on a faculty member with the given id to check if
+    * they exist.
+    * @param id
+    * @return true if the faculty member is valid
+    */
    public boolean validateFaculty(int id) {
       try {
          pstmt = conn.prepareStatement("SELECT facultyID FROM faculty WHERE facultyID = ?");
@@ -153,6 +168,11 @@ public class Backend {
       }
    }
 
+   /**
+    * Adds an abstract to a faculty member
+    * @param facultyID
+    * @param abstractText
+    */
    public void addRecord(int facultyID, String abstractText) {
       try {
          cstmt = conn.prepareCall("{CALL buildFacultyAbs(?, ?)}");
@@ -165,6 +185,13 @@ public class Backend {
       }
    }
 
+   /**
+    * Adds a student to the database
+    * @param fName
+    * @param lName
+    * @param email
+    * @return the ID of the student added. Will return 0 if the method failed.
+    */
    public int addStudent(String fName, String lName, String email) {
       try {
          pstmt = conn.prepareStatement("INSERT INTO student (lastName, firstName, email) VALUES (?, ?, ?)");
