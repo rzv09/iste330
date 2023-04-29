@@ -362,12 +362,6 @@ DELIMITER ;
 -- populate database
 -- faculty
 INSERT INTO faculty (firstName, lastName, email, buildingNumber, officeNumber)
-<<<<<<< HEAD
-VALUES ('Brom', 'Holcombson', 'Ironscale@varden.org', 5, 7871),
-       ('Iron', 'Galbatorix', 'Firstforsworn@broddring.net', 5, 0133),
-       ('Oromis', 'Thrándurin', 'Emosage@eldunari.net', 5, 7200),
-       ('Angela', 'Uluthrek', 'madwomanwizened@varden.org', 5, 0022);
-=======
 VALUES
 ('Brom', 'Holcombson','Ironscale@varden.org', 5, 7871),
 ('Iron', 'Galbatorix','Firstforsworn@broddring.net',5, 0133),
@@ -379,7 +373,6 @@ VALUES
 ('Percival', 'Willem', 'headprovost@byrgenwerth.edu', 4, 2545),
 ('Randal', 'Carter', 'professorunspeakable@miskatonic.edu', 10, 1920),
 ('Harley', 'Warren', 'barrowsleeper@arkham.edu', 10, 1000);
->>>>>>> 228350c (The inserts to prebuild the database have been completed.)
 
 -- Holcombson
 CALL addFacultyKeyword(100, 'dracology');
