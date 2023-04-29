@@ -253,7 +253,7 @@ public class Backend {
 
 
    /**
-    * A function which allows one to add a keyword to a student.
+    * A function which allows one to add a keyword to a person.
     * @param type - a character indicating the type of person the keyword is being added to.
     * @param id
     * @param word
@@ -277,8 +277,39 @@ public class Backend {
          cstmt.setString(2, word);
          cstmt.executeUpdate();
       } catch (SQLException se) {
-         System.out.println("Error occured while attempting to add student keyword");
+         System.out.println("Error occured while attempting to add keyword.");
          se.printStackTrace();
       }
-   }
+   } //End of addKeyword
+
+
+   /**
+    * A function which removes a keyword from a person.
+    * @param type - a character indicating the type of person the keyword is being added to.
+    * @param id
+    * @param word
+    */
+    public void removeKeyword(char type, int id, String word){
+      try{
+         switch(type){
+            case 's':
+               //remove student keyword if the type is 's'
+               System.out.println("Preparing to remove student keyword...");
+               cstmt = conn.prepareCall("{CALL removeStudentKeyword(?, ?)}");
+               break;
+            case 'f':
+               //remove faculty keyword if the type is 'f'
+               System.out.println("Preparing to remove faculty keyword...");
+               cstmt = conn.prepareCall("{CALL removeFacultyKeyword(?, ?)}");
+               break;
+         } //End of switch
+
+         cstmt.setInt(1, id);
+         cstmt.setString(2, word);
+         cstmt.executeUpdate();
+      } catch (SQLException se) {
+         System.out.println("Error occured while attempting to remove keyword.");
+         se.printStackTrace();
+      }
+   } //End of addKeyword
 }
