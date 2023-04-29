@@ -516,10 +516,6 @@ Or wear a face where faces should be found!');
 
 
 INSERT INTO student (firstName, lastName, email)
-<<<<<<< HEAD
-VALUES ('Eragon', 'Bromsson', 'brisingr@varden.org'),
-       ('Murtagh', 'Morzansson', 'kingkiller20@broddring.net');
-=======
 VALUES
 ('Eragon', 'Bromsson', 'brisingr@varden.org'),
 ('Murtagh', 'Morzansson', 'kingkiller20@broddring.net'),
@@ -531,7 +527,6 @@ VALUES
 ('Ebrietas', 'Cosm', 'cosmogal@oeden.org'),
 ('Victor', 'Frankenstein', 'shellshocker@victoria.net'),
 ('Mina', 'Harker', 'garlicstake@helsing.net');
->>>>>>> 228350c (The inserts to prebuild the database have been completed.)
 
 -- Eragon
 CALL addStudentKeyword(100, 'dracology');
