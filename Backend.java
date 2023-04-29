@@ -250,4 +250,35 @@ public class Backend {
 
 
    }
+
+
+   /**
+    * A function which allows one to add a keyword to a student.
+    * @param type - a character indicating the type of person the keyword is being added to.
+    * @param id
+    * @param word
+    */
+   public void addKeyword(char type, int id, String word){
+      try{
+         switch(type){
+            case 's':
+               //Add student keyword if the type is 's'
+               System.out.println("Preparing to add student keyword...");
+               cstmt = conn.prepareCall("{CALL addStudentKeyword(?, ?)}");
+               break;
+            case 'f':
+               //Add faculty keyword if the type is 'f'
+               System.out.println("Preparing to add faculty keyword...");
+               cstmt = conn.prepareCall("{CALL addFacultyKeyword(?, ?)}");
+               break;
+         } //End of switch
+
+         cstmt.setInt(1, id);
+         cstmt.setString(2, word);
+         cstmt.executeUpdate();
+      } catch (SQLException se) {
+         System.out.println("Error occured while attempting to add student keyword");
+         se.printStackTrace();
+      }
+   }
 }
