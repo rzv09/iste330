@@ -303,6 +303,7 @@ public class Backend {
          cstmt.setInt(1, id);
          cstmt.setString(2, word);
          cstmt.executeUpdate();
+         System.out.println("Keyword Added!");
       } catch (SQLException se) {
          System.out.println("Error occured while attempting to add keyword.");
          se.printStackTrace();
@@ -334,6 +335,7 @@ public class Backend {
          cstmt.setInt(1, id);
          cstmt.setString(2, word);
          cstmt.executeUpdate();
+         System.out.println("Keyword Removed!");
       } catch (SQLException se) {
          System.out.println("Error occured while attempting to remove keyword.");
          se.printStackTrace();

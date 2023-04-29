@@ -71,8 +71,7 @@ public class Presentation extends JFrame {
                         subtask = true;
                         while (subtask) {
                            deleteKeyword("faculty");
-                           UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
-                           int status = JOptionPane.showConfirmDialog(null, "Would you like to add another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
+                           int status = JOptionPane.showConfirmDialog(null, "Would you like to remove another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
                            subtask = status == JOptionPane.YES_OPTION;
                         }
                      }
@@ -80,7 +79,6 @@ public class Presentation extends JFrame {
                         subtask = true;
                         while (subtask) {
                            searchKeywords("student");
-                           UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
                            int status = JOptionPane.showConfirmDialog(null, "Would you like to search again?", "Search Students", JOptionPane.YES_NO_OPTION);
                            subtask = status == JOptionPane.YES_OPTION;
                         }
@@ -117,7 +115,6 @@ public class Presentation extends JFrame {
                            subtask = true;
                            while (subtask) {
                               addKeyword("student");
-                              UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
                               int status = JOptionPane.showConfirmDialog(null, "Would you like to add another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
                               subtask = status == JOptionPane.YES_OPTION;
                            }
@@ -126,8 +123,7 @@ public class Presentation extends JFrame {
                            subtask = true;
                            while (subtask) {
                               deleteKeyword("student");
-                              UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
-                              int status = JOptionPane.showConfirmDialog(null, "Would you like to add another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
+                              int status = JOptionPane.showConfirmDialog(null, "Would you like to remove another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
                               subtask = status == JOptionPane.YES_OPTION;
                            }
                         }

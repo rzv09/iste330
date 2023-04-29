@@ -107,29 +107,6 @@ CREATE TABLE student_keyword (
 		ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-
-
-
-DROP TABLE IF EXISTS faculty_student;
-CREATE TABLE faculty_student(
-facultyID INT UNSIGNED NOT NULL,
-StudentID INT UNSIGNED NOT NULL,
-PRIMARY KEY (facultyID, StudentID),
-CONSTRAINT faculty_student_faculty_FK
-	FOREIGN KEY (facultyID)
-	REFERENCES faculty(facultyID)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
- CONSTRAINT faculty_student_student_FK
-	FOREIGN KEY (StudentID)
-	REFERENCES student(StudentID)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
-) ENGINE = InnoDB DEFAULT CHARSET = utf8;
-
-
-
-
 -- Adds a keyword to a student
 DROP PROCEDURE IF EXISTS addStudentKeyword;
 DELIMITER //
@@ -279,18 +256,20 @@ BEGIN
 	IF keywordTwo = '' THEN
 		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
 		FROM faculty
-		JOIN faculty_keyword USING(facultyID)
-		JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
-        JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
-        JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
+		LEFT JOIN faculty_keyword USING(facultyID)
+		LEFT JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
+        LEFT JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
+        LEFT JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
 		WHERE faculty_topics.word LIKE ('%' || keywordOne || '%')
 		    OR (abstract.abs_text LIKE ('%' || keywordOne ||'%'));
 	-- If only two keywords are provided, ignore keywordThree
 	ELSEIF keywordThree = '' THEN
 		SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
 		FROM faculty
-		JOIN faculty_keyword USING(facultyID)
-		JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
+        LEFT JOIN faculty_keyword USING(facultyID)
+        LEFT JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
+        LEFT JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
+        LEFT JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
 		WHERE faculty_topics.word LIKE ('%' || keywordOne || '%')
 			OR faculty_topics.word LIKE ('%' || keywordTwo || '%')
             OR abstract.abs_text LIKE ('%' || keywordOne || '%')
@@ -299,10 +278,10 @@ BEGIN
 	ELSE
         SELECT DISTINCT faculty.lastName, faculty.firstName, faculty.email, faculty.buildingNumber, faculty.officeNumber
         FROM faculty
-                 JOIN faculty_keyword USING(facultyID)
-                 JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
-                 JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
-                 JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
+        LEFT JOIN faculty_keyword USING(facultyID)
+        LEFT JOIN faculty_topics ON faculty_keyword.KeywordID = faculty_topics.KeywordID
+        LEFT JOIN faculty_abstract ON faculty.facultyID = faculty_abstract.facultyID
+        LEFT JOIN abstract ON faculty_abstract.abstractID = abstract.abstractID
         WHERE faculty_topics.word LIKE ('%' || keywordOne || '%')
            OR faculty_topics.word LIKE ('%' || keywordTwo || '%')
            OR faculty_topics.word LIKE ('%' || keywordThree || '%')
@@ -328,33 +307,29 @@ BEGIN
 	IF keywordTwo = '' THEN
 		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
 		FROM student
-		JOIN student_keyword USING(StudentID)
-		JOIN student_topics ON student_keyword.KeywordID = student_topics.KeywordID
+		LEFT JOIN student_keyword USING(StudentID)
+		LEFT JOIN student_topics ON student_keyword.KeywordID = student_topics.KeywordID
 		WHERE student_topics.word LIKE ('%' || keywordOne || '%');
 	-- If only two keywords are provided, ignore keywordThree
 	ELSEIF keywordThree = '' THEN
 		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
 		FROM student
-		JOIN student_keyword USING(StudentID)
-		JOIN student_topics ON student_keyword.KeywordID = student_topics.KeywordID
+		LEFT JOIN student_keyword USING(StudentID)
+		LEFT JOIN student_topics ON student_keyword.KeywordID = student_topics.KeywordID
 		WHERE student_topics.word LIKE ('%' || keywordOne || '%')
 			OR student_topics.word LIKE ('%' || keywordTwo || '%');
 	-- If three keywords are provided.
 	ELSE
 		SELECT DISTINCT student.lastName, student.firstName, student.email, student.StudentID
 		FROM student
-		JOIN student_keyword USING(StudentID)
-		JOIN student_topics ON student_keyword.KeywordID = student_topics.KeywordID
+		LEFT JOIN student_keyword USING(StudentID)
+		LEFT JOIN student_topics ON student_keyword.KeywordID = student_topics.KeywordID
 		WHERE student_topics.word LIKE ('%' || keywordOne || '%')
 			OR student_topics.word LIKE ('%' || keywordTwo || '%')
 			OR student_topics.word LIKE ('%' || keywordThree || '%');
 	END IF;
 END //
 DELIMITER ;
-
-
-
-USE CollegeConnection;
 
 -- populate database
 -- faculty
