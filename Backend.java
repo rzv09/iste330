@@ -285,15 +285,15 @@ public class Backend {
     * @param id
     * @param word
     */
-   public void addKeyword(char type, int id, String word){
+   public void addKeyword(String type, int id, String word){
       try{
          switch(type){
-            case 's':
+            case "student":
                //Add student keyword if the type is 's'
                System.out.println("Preparing to add student keyword...");
                cstmt = conn.prepareCall("{CALL addStudentKeyword(?, ?)}");
                break;
-            case 'f':
+            case "faculty":
                //Add faculty keyword if the type is 'f'
                System.out.println("Preparing to add faculty keyword...");
                cstmt = conn.prepareCall("{CALL addFacultyKeyword(?, ?)}");
@@ -316,15 +316,15 @@ public class Backend {
     * @param id
     * @param word
     */
-    public void removeKeyword(char type, int id, String word){
+    public void removeKeyword(String type, int id, String word){
       try{
          switch(type){
-            case 's':
+            case "student":
                //remove student keyword if the type is 's'
                System.out.println("Preparing to remove student keyword...");
                cstmt = conn.prepareCall("{CALL removeStudentKeyword(?, ?)}");
                break;
-            case 'f':
+            case "faculty":
                //remove faculty keyword if the type is 'f'
                System.out.println("Preparing to remove faculty keyword...");
                cstmt = conn.prepareCall("{CALL removeFacultyKeyword(?, ?)}");

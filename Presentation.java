@@ -46,33 +46,46 @@ public class Presentation extends JFrame {
                boolean working = true;
                boolean subtask;
                while(working){
-                  String[] opt = new String[] {"Add Abstract", "Add Keyword", "Search Students", "Exit"};
+                  String[] opt = new String[] {"Add a Abstract", "Add a Keyword", "Delete a Keyword", "Search Students", "Exit"};
                   int response = JOptionPane.showOptionDialog(null, "Select an Action:", "Faculty Select", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opt, opt[0]);
-                  switch (response){
-                     case 0:
+                  switch (response) {
+                     case 0 -> { // Add Abstract
                         subtask = true;
-                        while(subtask){
+                        while (subtask) {
                            addRecord();
                            UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
                            int status = JOptionPane.showConfirmDialog(null, "Would you like to add another abstract?", "Input Abstract Entry", JOptionPane.YES_NO_OPTION);
                            subtask = status == JOptionPane.YES_OPTION;
                         }
-                        break;
-                     case 1:
-                        // Add Keyword Code
-                        break;
-                     case 2:
+                     }
+                     case 1 -> { // Add a Faculty Keyword
                         subtask = true;
-                        while(subtask){
+                        while (subtask) {
+                           addKeyword("faculty");
+                           UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
+                           int status = JOptionPane.showConfirmDialog(null, "Would you like to add another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
+                           subtask = status == JOptionPane.YES_OPTION;
+                        }
+                     }
+                     case 2 -> { // Delete a Faculty Keyword
+                        subtask = true;
+                        while (subtask) {
+                           deleteKeyword("faculty");
+                           UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
+                           int status = JOptionPane.showConfirmDialog(null, "Would you like to add another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
+                           subtask = status == JOptionPane.YES_OPTION;
+                        }
+                     }
+                     case 3 -> { // Search Keywords
+                        subtask = true;
+                        while (subtask) {
                            searchKeywords("student");
                            UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
                            int status = JOptionPane.showConfirmDialog(null, "Would you like to search again?", "Search Students", JOptionPane.YES_NO_OPTION);
                            subtask = status == JOptionPane.YES_OPTION;
                         }
-                        break;
-                     default:
-                        working = false;
-                        break;
+                     }
+                     default -> working = false; // Exit
                   }
                }
             }
@@ -93,18 +106,44 @@ public class Presentation extends JFrame {
                loggedIn = addStudent();
             }
 
-				if(loggedIn){
-               boolean searching = true;
-               while(searching){
-                  searchKeywords("faculty");
-                  int status = JOptionPane.showConfirmDialog(null, "Would you like to continue searching?", "Input Keywords to Search", JOptionPane.YES_NO_OPTION);
-                  if(status == JOptionPane.YES_OPTION){
-                     searching = true;
-                  } else {
-                     searching = false;
+               if(loggedIn){
+                  boolean working = true;
+                  boolean subtask;
+                  while(working){
+                     String[] opt = new String[] {"Add a Keyword", "Delete a Keyword", "Search Faculty", "Exit"};
+                     int response = JOptionPane.showOptionDialog(null, "Select an Action:", "Faculty Select", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opt, opt[0]);
+                     switch (response) {
+                        case 0 -> { // Add a Student Keyword
+                           subtask = true;
+                           while (subtask) {
+                              addKeyword("student");
+                              UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
+                              int status = JOptionPane.showConfirmDialog(null, "Would you like to add another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
+                              subtask = status == JOptionPane.YES_OPTION;
+                           }
+                        }
+                        case 1 -> { // Delete a Student Keyword
+                           subtask = true;
+                           while (subtask) {
+                              deleteKeyword("student");
+                              UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
+                              int status = JOptionPane.showConfirmDialog(null, "Would you like to add another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
+                              subtask = status == JOptionPane.YES_OPTION;
+                           }
+                        }
+                        case 2 -> { // Search Faculty Keywords
+                           subtask = true;
+                           while (subtask) {
+                              searchKeywords("faculty");
+                              UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
+                              int status = JOptionPane.showConfirmDialog(null, "Would you like to search again?", "Search Faculty", JOptionPane.YES_NO_OPTION);
+                              subtask = status == JOptionPane.YES_OPTION;
+                           }
+                        }
+                        default -> working = false; // Exit
+                     }
                   }
                }
-            }
 			}
 		});
 
@@ -454,6 +493,50 @@ public class Presentation extends JFrame {
          e.printStackTrace();
 		} // end of try/catch
    } //end of searchKeywords()
+
+   public void addKeyword(String type) {
+      JPanel Searchbox = new JPanel(new GridLayout(1,2));
+
+      JLabel lblWordOne = new JLabel("Keyword: ");
+
+      JTextField tfWordOne = new JTextField("");
+
+      Searchbox.add(lblWordOne);
+      Searchbox.add(tfWordOne);
+
+      JOptionPane.showMessageDialog(null, Searchbox, "Input "+type.substring(0, 1).toUpperCase() + type.substring(1)+" Keyword to be Added", JOptionPane.INFORMATION_MESSAGE);
+
+      String keyword = tfWordOne.getText().strip();
+
+      try {
+         DBConnect.addKeyword(type, userID, keyword);
+      } catch (Exception e) {
+         System.out.println("Error occured while attempting to add a keyword");
+         e.printStackTrace();
+      } // end of try/catch
+   }
+
+   public void deleteKeyword(String type) {
+      JPanel Searchbox = new JPanel(new GridLayout(1,2));
+
+      JLabel lblWordOne = new JLabel("Keyword: ");
+
+      JTextField tfWordOne = new JTextField("");
+
+      Searchbox.add(lblWordOne);
+      Searchbox.add(tfWordOne);
+
+      JOptionPane.showMessageDialog(null, Searchbox, "Input "+type.substring(0, 1).toUpperCase() + type.substring(1)+" Keyword to be Deleted", JOptionPane.INFORMATION_MESSAGE);
+
+      String keyword = tfWordOne.getText().strip();
+
+      try {
+         DBConnect.removeKeyword(type, userID, keyword);
+      } catch (Exception e) {
+         System.out.println("Error occured while attempting to add a keyword");
+         e.printStackTrace();
+      } // end of try/catch
+   }
 
    public static void main(String [] args){
       System.out.println("ISTE330-01  Presentation   Raghav, Charki,Maple, Ramanz,    04-25-2023\n");
