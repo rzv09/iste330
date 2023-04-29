@@ -362,39 +362,176 @@ DELIMITER ;
 -- populate database
 -- faculty
 INSERT INTO faculty (firstName, lastName, email, buildingNumber, officeNumber)
+<<<<<<< HEAD
 VALUES ('Brom', 'Holcombson', 'Ironscale@varden.org', 5, 7871),
        ('Iron', 'Galbatorix', 'Firstforsworn@broddring.net', 5, 0133),
        ('Oromis', 'Thrándurin', 'Emosage@eldunari.net', 5, 7200),
        ('Angela', 'Uluthrek', 'madwomanwizened@varden.org', 5, 0022);
+=======
+VALUES
+('Brom', 'Holcombson','Ironscale@varden.org', 5, 7871),
+('Iron', 'Galbatorix','Firstforsworn@broddring.net',5, 0133),
+('Oromis', 'Thrándurin', 'Emosage@eldunari.net', 5, 7200),
+('Angela', 'Uluthrek', 'madwomanwizened@varden.org', 5, 0022),
+('Annalise', 'Cainhurst', 'hercorruptmajesty@vileblood.edu', 4, 4200),
+('Martin', 'Logarius', 'grandexecutioner@sanctum.edu', 4, 2560),
+('Florence', 'Gehrman', 'firsthunter@workshop.edu', 4, 1280),
+('Percival', 'Willem', 'headprovost@byrgenwerth.edu', 4, 2545),
+('Randal', 'Carter', 'professorunspeakable@miskatonic.edu', 10, 1920),
+('Harley', 'Warren', 'barrowsleeper@arkham.edu', 10, 1000);
+>>>>>>> 228350c (The inserts to prebuild the database have been completed.)
 
 -- Holcombson
 CALL addFacultyKeyword(100, 'dracology');
 CALL addFacultyKeyword(100, 'fencing');
 CALL addFacultyKeyword(100, 'mysticism');
 CALL addFacultyKeyword(100, 'history');
+CALL buildFacultyAbs(100, 'Keep in mind that many people have died for their beliefs; it’s actually quite common. The real courage is in living and suffering for what you believe.');
 
 -- Galbatorix
 CALL addFacultyKeyword(101, 'dracology');
 CALL addFacultyKeyword(101, 'dark arts');
 CALL addFacultyKeyword(101, 'mysticism');
-CALL addFacultyKeyword(101, 'alchemy');
+CALL addFacultyKeyword(101, 'chemistry');
+CALL buildFacultyAbs(101, 'To whom is not the issue. When the Varden learn that the legend is real, they will be encouraged to challenge me. And I am not interested in being challenged.');
 
 -- Thrándurin
 CALL addFacultyKeyword(102, 'dracology');
 CALL addFacultyKeyword(102, 'fencing');
 CALL addFacultyKeyword(102, 'mysticism');
 CALL addFacultyKeyword(102, 'history');
+CALL buildFacultyAbs(102, 'History provides us with numerous examples of people who were convinced that they were doing the right thing and committed terrible crimes because of it.');
 
 -- Uluthrek
 CALL addFacultyKeyword(103, 'dracology');
 CALL addFacultyKeyword(103, 'mysticism');
 CALL addFacultyKeyword(103, 'witchcraft');
 CALL addFacultyKeyword(103, 'politics');
+CALL buildFacultyAbs(103, 'He’s acting as foolish as a kitten . . . but then, everyone’s entitled to a little foolishness once in a while.');
+
+-- Cainhurst
+CALL addFacultyKeyword(104, 'dark arts');
+CALL addFacultyKeyword(104, 'politics');
+CALL addFacultyKeyword(104, 'witchcraft');
+CALL addFacultyKeyword(104, 'epidemiology');
+CALL buildFacultyAbs(104, 'Very well. Drink deep of Our blood. Feel the spreading corruption burn. Now, thou’rt too a Vileblood. We two, the very last on this earth. We await thy return. For the honor of Cainhurst.');
+
+-- Logarius
+CALL addFacultyKeyword(105, 'alchemy');
+CALL addFacultyKeyword(105, 'mysticism');
+CALL addFacultyKeyword(105, 'witchcraft');
+CALL addFacultyKeyword(105, 'epidemiology');
+CALL buildFacultyAbs(105, '
+In his time, Master Logarius led his executioners into Cainhurst Castle to cleanse it of the Vilebloods.
+But all did not go well and Master Logarius became a blessed anchor, guarding us from evil...Tragic, tragic times...that Master Logarius should be abandoned in the accursed domain of the Vilebloods.');
+
+-- Gehrman
+CALL addFacultyKeyword(106, 'witchcraft');
+CALL addFacultyKeyword(106, 'fencing');
+CALL addFacultyKeyword(106, 'epidemiology');
+CALL addFacultyKeyword(106, 'psychology');
+CALL buildFacultyAbs(106, 'Dear, oh dear. What was it? The Hunt? The Blood? Or the horrible dream? Oh, it does not matter... It always comes down to the Hunter''s helper to clean up after these sort of messes. Tonight, Gehrman joins the hunt...');
+
+-- Willem
+CALL addFacultyKeyword(107, 'history');
+CALL addFacultyKeyword(107, 'epidemiology');
+CALL addFacultyKeyword(107, 'psychology');
+CALL addFacultyKeyword(107, 'mysticism');
+CALL buildFacultyAbs(107, 'We are born of the blood, made men by the blood, undone by the blood. Our eyes are yet to open...
+Fear the old blood.');
+
+-- Carter
+CALL addFacultyKeyword(108, 'psychology');
+CALL addFacultyKeyword(108, 'witchcraft');
+CALL addFacultyKeyword(108, 'astronomy');
+CALL addFacultyKeyword(108, 'politics');
+CALL buildFacultyAbs(108, 'In the midnight heavens burning
+     Thro’ ethereal deeps afar,
+Once I watch’d with restless yearning
+     An alluring, aureate star;
+Ev’ry eye aloft returning,
+     Gleaming nigh the Arctic car.
+
+Mystic waves of beauty blended
+     With the gorgeous golden rays;
+Phantasies of bliss descended
+     In a myrrh’d Elysian haze;
+And in lyre-born chords extended
+     Harmonies of Lydian lays.
+
+There (thought I) lies scenes of pleasure,
+     Where the free and blessed dwell,
+And each moment bears a treasure
+     Freighted with a lotus-spell,
+And there floats a liquid measure
+     From the lute of Israfel.
+
+There (I told myself) were shining
+     Worlds of happiness unknown,
+Peace and Innocence entwining
+     By the Crowned Virtue’s throne;
+Men of light, their thoughts refining
+     Purer, fairer, than our own.
+
+Thus I mus’d, when o’er the vision
+     Crept a red delirious change;
+Hope dissolving to derision,
+     Beauty to distortion strange;
+Hymnic chords in weird collision,
+     Spectral sights in endless range.
+
+Crimson burn’d the star of sadness
+     As behind the beams I peer’d;
+All was woe that seem’d but gladness
+     Ere my gaze with truth was sear’d;
+Cacodaemons, mir’d with madness,
+     Thro’ the fever’d flick’ring leer’d.
+
+Now I know the fiendish fable
+     That the golden glitter bore;
+Now I shun the spangled sable
+     That I watch’d and lov’d before;
+But the horror, set and stable,
+     Haunts my soul for evermore.');
+
+-- Warren
+CALL addFacultyKeyword(109, 'psychology');
+CALL addFacultyKeyword(109, 'dark arts');
+CALL addFacultyKeyword(109, 'history');
+CALL addFacultyKeyword(109, 'mysticism');
+CALL buildFacultyAbs(109, 'Out of what crypt they crawl, I cannot tell,
+But every night I see the rubbery things,
+Black, horned, and slender, with membranous wings,
+They come in legions on the north wind’s swell
+With obscene clutch that titillates and stings,
+Snatching me off on monstrous voyagings
+To grey worlds hidden deep in nightmare’s well.
+
+Over the jagged peaks of Thok they sweep,
+Heedless of all the cries I try to make,
+And down the nether pits to that foul lake
+Where the puffed shoggoths splash in doubtful sleep.
+But ho! If only they would make some sound,
+Or wear a face where faces should be found!');
 
 
 INSERT INTO student (firstName, lastName, email)
+<<<<<<< HEAD
 VALUES ('Eragon', 'Bromsson', 'brisingr@varden.org'),
        ('Murtagh', 'Morzansson', 'kingkiller20@broddring.net');
+=======
+VALUES
+('Eragon', 'Bromsson', 'brisingr@varden.org'),
+('Murtagh', 'Morzansson', 'kingkiller20@broddring.net'),
+('Saphira', 'Bjartskular', 'brightscale@varden.org'),
+('Orik', 'Dûrgrimst Ingeitum', 'volundr@farthendur.com'),
+('Eileen', 'Branwen', 'bloodycrow@workshop.edu'),
+('Djura', 'Kegger', 'ashenhunter@powderkeg.edu'),
+('Alfred', 'Wheeler', 'wheeldisciple@healingchurch.edu'),
+('Ebrietas', 'Cosm', 'cosmogal@oeden.org'),
+('Victor', 'Frankenstein', 'shellshocker@victoria.net'),
+('Mina', 'Harker', 'garlicstake@helsing.net');
+>>>>>>> 228350c (The inserts to prebuild the database have been completed.)
 
 -- Eragon
 CALL addStudentKeyword(100, 'dracology');
@@ -407,3 +544,51 @@ CALL addStudentKeyword(101, 'dracology');
 CALL addStudentKeyword(101, 'fencing');
 CALL addStudentKeyword(101, 'dark arts');
 CALL addStudentKeyword(101, 'history');
+
+-- Saphira
+CALL addStudentKeyword(102, 'dracology');
+CALL addStudentKeyword(102, 'witchcraft');
+CALL addStudentKeyword(102, 'mysticism');
+CALL addStudentKeyword(102, 'metalurgy');
+
+-- Orik
+CALL addStudentKeyword(103, 'metalurgy');
+CALL addStudentKeyword(103, 'fencing');
+CALL addStudentKeyword(103, 'history');
+CALL addStudentKeyword(103, 'politics');
+
+-- Eileen
+CALL addStudentKeyword(104, 'fencing');
+CALL addStudentKeyword(104, 'epidemiology');
+CALL addStudentKeyword(104, 'psychology');
+CALL addStudentKeyword(104, 'security');
+
+-- Djura
+CALL addStudentKeyword(105, 'fencing');
+CALL addStudentKeyword(105, 'chemistry');
+CALL addStudentKeyword(105, 'epidemiology');
+CALL addStudentKeyword(105, 'metalurgy');
+
+-- Alfred
+CALL addStudentKeyword(106, 'fencing');
+CALL addStudentKeyword(106, 'mysticism');
+CALL addStudentKeyword(106, 'history');
+CALL addStudentKeyword(106, 'medecine');
+
+-- Ebrietas
+CALL addStudentKeyword(107, 'mysticism');
+CALL addStudentKeyword(107, 'epidemiology');
+CALL addStudentKeyword(107, 'medecine');
+CALL addStudentKeyword(107, 'chemistry');
+
+-- Victor
+CALL addStudentKeyword(108, 'chemistry');
+CALL addStudentKeyword(108, 'dark arts');
+CALL addStudentKeyword(108, 'medecine');
+CALL addStudentKeyword(108, 'biology');
+
+-- Mina
+CALL addStudentKeyword(109, 'medecine');
+CALL addStudentKeyword(109, 'politics');
+CALL addStudentKeyword(109, 'psychology');
+CALL addStudentKeyword(109, 'dracology');
