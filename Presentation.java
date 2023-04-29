@@ -26,12 +26,12 @@ public class Presentation extends JFrame {
 		JPanel jpCenter = new JPanel();
 		jpCenter.setLayout(new GridLayout(0,1));
 
-      connect();
+        connect();
 
 
-	   JButton jbAddFaculty = new JButton("I'm a Faculty Member");
-		jbAddFaculty.setFont(myButtonFont);
-		jbAddFaculty.addActionListener(new ActionListener(){
+	   JButton jbFaculty = new JButton("I'm a Faculty Member");
+		jbFaculty.setFont(myButtonFont);
+		jbFaculty.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ae) {
             boolean loggedIn;
 
@@ -47,7 +47,7 @@ public class Presentation extends JFrame {
                boolean subtask;
                while(working){
                   String[] opt = new String[] {"Add a Abstract", "Add a Keyword", "Delete a Keyword", "Search Students", "Exit"};
-                  int response = JOptionPane.showOptionDialog(null, "Select an Action:", "Faculty Select", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opt, opt[0]);
+                  int response = JOptionPane.showOptionDialog(null, "Select an Action:", "Faculty Options", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opt, opt[0]);
                   switch (response) {
                      case 0 -> { // Add Abstract
                         subtask = true;
@@ -55,6 +55,7 @@ public class Presentation extends JFrame {
                            addRecord();
                            UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
                            int status = JOptionPane.showConfirmDialog(null, "Would you like to add another abstract?", "Input Abstract Entry", JOptionPane.YES_NO_OPTION);
+                           UIManager.put("OptionPane.minimumSize", null);
                            subtask = status == JOptionPane.YES_OPTION;
                         }
                      }
@@ -62,8 +63,7 @@ public class Presentation extends JFrame {
                         subtask = true;
                         while (subtask) {
                            addKeyword("faculty");
-                           UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
-                           int status = JOptionPane.showConfirmDialog(null, "Would you like to add another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
+                           int status = JOptionPane.showConfirmDialog(null, "Would you like to add another keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
                            subtask = status == JOptionPane.YES_OPTION;
                         }
                      }
@@ -71,15 +71,15 @@ public class Presentation extends JFrame {
                         subtask = true;
                         while (subtask) {
                            deleteKeyword("faculty");
-                           int status = JOptionPane.showConfirmDialog(null, "Would you like to remove another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
+                           int status = JOptionPane.showConfirmDialog(null, "Would you like to remove another keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
                            subtask = status == JOptionPane.YES_OPTION;
                         }
                      }
-                     case 3 -> { // Search Keywords
+                     case 3 -> { // Search Student Keywords
                         subtask = true;
                         while (subtask) {
                            searchKeywords("student");
-                           int status = JOptionPane.showConfirmDialog(null, "Would you like to search again?", "Search Students", JOptionPane.YES_NO_OPTION);
+                           int status = JOptionPane.showConfirmDialog(null, "Would you like to search students again?", "Search Students", JOptionPane.YES_NO_OPTION);
                            subtask = status == JOptionPane.YES_OPTION;
                         }
                      }
@@ -91,9 +91,9 @@ public class Presentation extends JFrame {
 		});
 
 
-      JButton jbAddStudent = new JButton("I'm a Student");
-		jbAddStudent.setFont(myButtonFont);
-		jbAddStudent.addActionListener(new ActionListener(){
+      JButton jbStudent = new JButton("I'm a Student");
+		jbStudent.setFont(myButtonFont);
+		jbStudent.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ae) {
             boolean loggedIn = false;
 
@@ -109,13 +109,13 @@ public class Presentation extends JFrame {
                   boolean subtask;
                   while(working){
                      String[] opt = new String[] {"Add a Keyword", "Delete a Keyword", "Search Faculty", "Exit"};
-                     int response = JOptionPane.showOptionDialog(null, "Select an Action:", "Faculty Select", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opt, opt[0]);
+                     int response = JOptionPane.showOptionDialog(null, "Select an Action:", "Student Options", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opt, opt[0]);
                      switch (response) {
                         case 0 -> { // Add a Student Keyword
                            subtask = true;
                            while (subtask) {
                               addKeyword("student");
-                              int status = JOptionPane.showConfirmDialog(null, "Would you like to add another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
+                              int status = JOptionPane.showConfirmDialog(null, "Would you like to add another keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
                               subtask = status == JOptionPane.YES_OPTION;
                            }
                         }
@@ -123,7 +123,7 @@ public class Presentation extends JFrame {
                            subtask = true;
                            while (subtask) {
                               deleteKeyword("student");
-                              int status = JOptionPane.showConfirmDialog(null, "Would you like to remove another Keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
+                              int status = JOptionPane.showConfirmDialog(null, "Would you like to remove another keyword?", "Add Student Keyword", JOptionPane.YES_NO_OPTION);
                               subtask = status == JOptionPane.YES_OPTION;
                            }
                         }
@@ -131,8 +131,7 @@ public class Presentation extends JFrame {
                            subtask = true;
                            while (subtask) {
                               searchKeywords("faculty");
-                              UIManager.put("OptionPane.minimumSize", new Dimension(320, 120));
-                              int status = JOptionPane.showConfirmDialog(null, "Would you like to search again?", "Search Faculty", JOptionPane.YES_NO_OPTION);
+                              int status = JOptionPane.showConfirmDialog(null, "Would you like to search faculty again?", "Search Faculty", JOptionPane.YES_NO_OPTION);
                               subtask = status == JOptionPane.YES_OPTION;
                            }
                         }
@@ -143,6 +142,38 @@ public class Presentation extends JFrame {
 			}
 		});
 
+      JButton jbGuest = new JButton("I'm a Guest");
+      jbGuest.setFont(myButtonFont);
+      jbGuest.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent ae) {
+            boolean working = true;
+            boolean subtask;
+            while(working){
+               String[] opt = new String[] {"Search Students", "Search Faculty", "Exit"};
+               int response = JOptionPane.showOptionDialog(null, "Select an Action:", "Guest Options", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opt, opt[0]);
+               switch (response) {
+                  case 0 -> { // Search Students
+                     subtask = true;
+                     while (subtask) {
+                        searchKeywords("student");
+                        int status = JOptionPane.showConfirmDialog(null, "Would you like to search students again?", "Search Students", JOptionPane.YES_NO_OPTION);
+                        subtask = status == JOptionPane.YES_OPTION;
+                     }
+                  }
+                  case 1 -> { // Search Faculty Keywords
+                     subtask = true;
+                     while (subtask) {
+                        searchKeywords("faculty");
+                        int status = JOptionPane.showConfirmDialog(null, "Would you like to search faculty again?", "Search Faculty", JOptionPane.YES_NO_OPTION);
+                        subtask = status == JOptionPane.YES_OPTION;
+                     }
+                  }
+                  default -> working = false; // Exit
+               }
+            }
+         }
+      });
+
       // Button to handle closing the DB connection
 		JButton jbExit = new JButton("Exit");
       jbExit.setFont(myButtonFont);
@@ -152,8 +183,9 @@ public class Presentation extends JFrame {
 			}
 		});
 
-		jpCenter.add(jbAddFaculty);
-      jpCenter.add(jbAddStudent);
+		jpCenter.add(jbFaculty);
+        jpCenter.add(jbStudent);
+        jpCenter.add(jbGuest);
 		jpCenter.add(jbExit);
 		add(jpCenter);
 

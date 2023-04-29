@@ -249,11 +249,15 @@ public class Backend {
          cstmt.setString(3, keywordThree);
 
          rs = cstmt.executeQuery();
-
+         boolean header = true;
          switch(type){
             case "student":
                while(rs.next()) {
-                  System.out.println("\nMatching Student:\nLast Name: " +
+                  if(header){
+                     header = false;
+                     System.out.println("Matching Student(s):");
+                  }
+                  System.out.println("Last Name: " +
                           rs.getString("lastName") + " | " + "First Name: " +
                           rs.getString("firstName") + " | " + "Email Address: " +
                           rs.getString("email"));
@@ -261,7 +265,11 @@ public class Backend {
                break;
             case "faculty":
                while(rs.next()) {
-                  System.out.println("\nMatching Faculty Member:\nLast Name: " +
+                  if(header){
+                     header = false;
+                     System.out.println("Matching Faculty Member(s):");
+                  }
+                  System.out.println("Last Name: " +
                           rs.getString("lastName") + " | " + "First Name: " +
                           rs.getString("firstName") + " | " + "Email Address: " +
                           rs.getString("email") + " | " + "Building Number: " +
