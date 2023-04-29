@@ -254,7 +254,7 @@ public class Backend {
 
    /**
     * A function which allows one to add a keyword to a person.
-    * @param type - a character indicating the type of person the keyword is being added to.
+    * @param type - a character indicating the type of person the keyword is being added to. 'f' for faculty, 's' for student.
     * @param id
     * @param word
     */
@@ -285,7 +285,7 @@ public class Backend {
 
    /**
     * A function which removes a keyword from a person.
-    * @param type - a character indicating the type of person the keyword is being added to.
+    * @param type - a character indicating the type of person the keyword is being added to. 'f' for faculty, 's' for student.
     * @param id
     * @param word
     */
