@@ -7,8 +7,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * ISTE 330.01 - Habermas
- * Group 5 - Project Part 1
- * Authors: Raghav, Charki, Maple, Ramanz
+ * Group 5 - Group Project
+ * Authors: Maple Riemer, Declan Naughton, Raman Zatsarenko, Raghav Sharma, Sai Charkadar Meruva
  */
 
 public class Presentation extends JFrame {
@@ -621,7 +621,7 @@ public class Presentation extends JFrame {
     }
 
     public static void main(String[] args) {
-        System.out.println("ISTE330-01  Presentation Raghav, Charki, Maple, Ramanz,    04-25-2023\n");
+        System.out.println("ISTE330-01 Presentation - Maple Riemer, Declan Naughton, Raman Zatsarenko, Raghav Sharma, Sai Charkadar Meruva - Completed 04-28-2023\n");
 
         new Presentation();
     } // end of main method

@@ -1,30 +1,38 @@
-directions.txt
 ISTE 330.01 - Habermas, Jim
 Group 5 - Project
-Authors: Raghav, Charki,Maple, Ramanz,
-Date Completed: 04/25/2023
-
+Authors: Maple Riemer, Declan Naughton, Raman Zatsarenko, Raghav Sharma, Sai Charkadar Meruva
+Date Completed: 04/28/2023
 
 Presentation Layer: "Presentation.java"
 
 Start by connecting to the database. Click "Connect to Data Source" and enter "root" as the user and "student" as the password. You can leave these fields blank, and the program will fill them in for you. The program will let you know if the connection was successful or not.
 
-Choose whether you are a faculty member or a student. If you are a returning user, you will need to provide your user ID to log in and access your previously stored information.
+Choose whether you are a faculty member, student, or guest.
+
+If you are a returning user, you will need to provide your user ID to log in and access your previously stored information.
 
 If you are a new user, you can add a faculty member by clicking "Add Faculty" and providing their last name, first name, email, and optional building and office numbers. The first faculty member added will have an ID number of 100, and each subsequent addition will increment by 1. The program will confirm if the query was successful.
 
 Alternatively, as a new user, you can add a student by clicking "Add Student" and providing their last name, first name, and email. The program will confirm if the query was successful.
 
-If you are a faculty member, after creating your user entry, you can add an abstract to the database by providing your ID number and the text of the abstract. When you log in again, you can add additional abstracts to the database.
+Guests do not need to log in at all, and will simply be granted access to their limited options.
 
-If you are a student, you can search the previously added abstracts by entering 1, 2, or 3 keywords. The program will return information about the faculty member whose abstract matches your search.
+If you are a faculty member, after creating your user entry, you have 5 options:
+    1) Adding an Abstract. Clicking this opens a dialog page that lets you add an abstract via typing it out, pasting it into the area, or using a file.
+    2) Adding a keyword to yourself, via a dialog that opens up on click.
+    3) Removing a keyword from yourself, via a dialog.
+    4) Searching student keywords, up to 3 at a time.
+    5) Exiting the Program
 
-To exit the program, click "Exit". The program will confirm if the termination was successful and provide a timestamp.
+If you are a student, after creating your user entry, you have 4 options:
+    1) Adding a keyword to yourself, via a dialog that opens up on click.
+    2) Removing a keyword from yourself, via a dialog.
+    3) Searching faculty keywords (notably, these are based off abstract pattern matching AND the faculty's own keywords), up to 3 at a time.
+    4) Exiting the Program
 
-If you are a returning user:
+If you are a guest, you have 2 options:
+    1) Search student keywords, up to 3 at a time.
+    2) Search faculty keywords, up to 3 at a time.
 
-Choose whether you are a faculty member or a student.
-
-Enter your user ID.
-Provide an abstract text or keyword search, depending on whether you are a faculty member or a student.
-Note that the program's Data Layer, "Backend.java", must be compiled in the same directory as the Presentation Layer for the program to function properly.
+To exit the program, click "Exit" once you have exited your option menu.
+The program will confirm if the termination was successful and provide a timestamp.

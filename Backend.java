@@ -5,8 +5,8 @@ import java.util.Objects;
 
 /**
  * ISTE 330.01 - Habermas
- * Group 5 - Project Part 1
- * Authors: Raghav, Charki, Maple, Ramanz,
+ * Group 5 - Group Project
+ * Authors: Maple Riemer, Declan Naughton, Raman Zatsarenko, Raghav Sharma, Sai Charkadar Meruva
  */
 
 public class Backend {
