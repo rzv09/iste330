@@ -351,3 +351,58 @@ BEGIN
 	END IF;
 END //
 DELIMITER ;
+
+
+
+USE CollegeConnection;
+
+-- populate database
+-- faculty
+INSERT INTO faculty (firstName, lastName, email, buildingNumber, officeNumber)
+VALUES
+('Brom', 'Holcombson','Ironscale@varden.org', 5, 7871),
+('Iron', 'Galbatorix','Firstforsworn@broddring.net',5, 0133),
+('Oromis', 'Thrándurin', 'Emosage@eldunari.net', 5, 7200),
+('Angela', 'Uluthrek', 'madwomanwizened@varden.org', 5, 0022);
+
+-- Holcombson
+CALL addFacultyKeyword(100, 'dracology');
+CALL addFacultyKeyword(100, 'fencing');
+CALL addFacultyKeyword(100, 'mysticism');
+CALL addFacultyKeyword(100, 'history');
+
+-- Galbatorix
+CALL addFacultyKeyword(101, 'dracology');
+CALL addFacultyKeyword(101, 'dark arts');
+CALL addFacultyKeyword(101, 'mysticism');
+CALL addFacultyKeyword(101, 'alchemy');
+
+-- Thrándurin
+CALL addFacultyKeyword(102, 'dracology');
+CALL addFacultyKeyword(102, 'fencing');
+CALL addFacultyKeyword(102, 'mysticism');
+CALL addFacultyKeyword(102, 'history');
+
+-- Uluthrek
+CALL addFacultyKeyword(103, 'dracology');
+CALL addFacultyKeyword(103, 'mysticism');
+CALL addFacultyKeyword(103, 'witchcraft');
+CALL addFacultyKeyword(103, 'politics');
+
+
+INSERT INTO student (firstName, lastName, email)
+VALUES
+('Eragon', 'Bromsson', 'brisingr@varden.org'),
+('Murtagh', 'Morzansson', 'kingkiller20@broddring.net');
+
+-- Eragon
+CALL addStudentKeyword(100, 'dracology');
+CALL addStudentKeyword(100, 'fencing');
+CALL addStudentKeyword(100, 'politics');
+CALL addStudentKeyword(100, 'mysticism');
+
+-- Murtagh
+CALL addStudentKeyword(101, 'dracology');
+CALL addStudentKeyword(101, 'fencing');
+CALL addStudentKeyword(101, 'dark arts');
+CALL addStudentKeyword(101, 'history');
